@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['js/**', 'index.html', '!**/node_modules/**'],
+      files: ['js/**', 'serviceworker.js', 'index.html', '!**/node_modules/**'],
       tasks: ['default']
     },
     connect: {
