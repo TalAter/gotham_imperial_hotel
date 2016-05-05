@@ -1,18 +1,42 @@
-var responseContent = '<html>' +
-  '<body>' +
-  '<style>' +
-  'body {text-align: center; background-color: #333; color: #eee;}' +
-  '</style>' +
-  '<h1>Gotham Imperial Hotel</h1>' +
-  '<p>There seems to be a problem with your connection.</p>' +
-  '<p>Come visit us at 1 Imperial Plaza, Gotham City for free Wi-Fi.</p>' +
-  '</body>' +
-  '</html>';
+var CACHE_NAME = 'gih-cache-v4';
+var CACHED_URLS = [
+  '/sw-index.html',
+  'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+  '/img/logo.png'
+];
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll(CACHED_URLS);
+    })
+  );
+});
 
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).catch(function() {
-      return new Response(responseContent, {headers: { 'Content-Type': 'text/html' }});
+      return caches.match(event.request).then(function(response) {
+        if (response) {
+          return response;
+        } else if (event.request.headers.get('accept').includes('text/html')) {
+          return caches.match('/sw-index.html');
+        }
+      });
+    })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheName.startsWith('gih-cache') && CACHE_NAME !== cacheName) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
