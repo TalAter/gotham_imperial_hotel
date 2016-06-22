@@ -181,3 +181,35 @@ header h1, header h2 {
   background-position: center;
   height: 550px;
 }
+
+/* Footer */
+#footer-container {
+  margin-bottom: 50px;
+}
+#footer-container .col-md-3, #footer-container .col-md-4, #footer-container .col-md-5 {
+  margin-top: 50px;
+}
+#footer-container h4 {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+#footer-container p {
+  margin-bottom: 4px;
+}
+#footer-container .contact-details-row {
+  margin: 0 0 4px 0;
+  border-bottom: 1px solid #3d3a30;
+}
+#footer-container .contact-details-row div {
+  padding: 0;
+}
+#footer-container .contact-details-row div:last-child {
+  text-align: right;
+}
+#footer-container .slogan-row {
+  margin-top: 49px;
+}
+#footer-container .slogan-row img {
+  width: 150px;
+}
