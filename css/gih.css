@@ -45,13 +45,13 @@ header {
   color: #fff;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   header {
     background-image: url('/img/jumbo-background.jpg');
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   header {
     background-image: url('/img/jumbo-background-sm.jpg');
   }
@@ -75,7 +75,7 @@ header h1, header h2 {
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.75);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   header h1, header h2 {
     font-size: 20px;
   }
