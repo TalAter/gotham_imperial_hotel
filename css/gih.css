@@ -37,12 +37,24 @@ header {
   position: relative;
   display: table;
   text-align: center;
-  background-image: url('/img/jumbo-background.jpg');
+  /*background-image: url('/img/jumbo-background.jpg');*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   color: #fff;
+}
+
+@media (min-width: 768px) {
+  header {
+    background-image: url('/img/jumbo-background.jpg');
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    background-image: url('/img/jumbo-background-sm.jpg');
+  }
 }
 
 .header-inner-container {
