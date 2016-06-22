@@ -117,3 +117,27 @@ header h1, header h2 {
     margin-left: 30px;
   }
 }
+
+/* About hotel boxes */
+.about-hotel-box {
+  min-height: 411px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: #f0ebdd;
+  font-size: 24px;
+  padding: 65px 75px;
+}
+.about-hotel-box h3 {
+  font-size: 48px;
+  margin-bottom: 40px;
+  font-family: 'Elsie', cursive;
+}
+#about-hotel--luxury {
+  background-image: url('/img/about-hotel-luxury.jpg');
+  background-position-x: center;
+}
+#about-hotel--spa {
+  background-image: url('/img/about-hotel-spa.jpg');
+}
