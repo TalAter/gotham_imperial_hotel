@@ -141,3 +141,31 @@ header h1, header h2 {
 #about-hotel--spa {
   background-image: url('/img/about-hotel-spa.jpg');
 }
+
+/* Events widget */
+#events-container {
+  background-color: #a3915e;
+  color: #242424;
+  font-size: 14px;
+  font-weight: 300;
+}
+#events-container h4 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.event-container .event-card {
+  background-color: #fff;
+  -webkit-box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.15);
+  box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.15);
+  margin: 25px 0;
+  padding: 10px 15px;
+  min-height: 280px;
+}
+.event-card .event-date {
+  color: #c0392b;
+  font-size: 12px;
+  font-style: italic;
+  text-align: right;
+  margin-bottom: 6px;
+}
