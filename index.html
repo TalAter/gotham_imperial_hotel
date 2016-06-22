@@ -7,7 +7,7 @@
   <title>Gotham Imperial Hotel</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/gih.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,600,900" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar navbar-static-top">
@@ -25,6 +25,31 @@
       <h2>Experience Gotham. Experience Imperial.</h2>
     </div>
   </header>
+
+<div class="container-fluid" id="booking-widget-container">
+  <div class="row">
+    <div class="col-md-2" id="booking-widget-label">Book<br>Now</div>
+    <div class="col-md-10" id="booking-widget">
+      <form>
+        <div class="input-group">
+          <label for="form--arrival-date">Arrival:</label>
+          <input class="form-control" type="date" id="form--arrival-date">
+        </div>
+        <div class="input-group">
+          <label for="form--departure-date">Departure:</label>
+          <input class="form-control" type="date" id="form--departure-date">
+        </div>
+        <div class="input-group">
+          <label for="form--guests">Guests:</label>
+          <input class="form-control" type="number" min="1" max="10" id="form--guests">
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-default btn-lg" type="button">Check Availability</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
   <script src="/js/app.js"></script>
 </body>
