@@ -15,8 +15,11 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['public/**/*', '!**/node_modules/**'],
-      tasks: ['default']
+      files: ['public/**/*', 'server/**/*', '!**/node_modules/**'],
+      tasks: ['default', 'express'],
+      options: {
+        spawn: false
+      }
     },
     express: {
       web: {
