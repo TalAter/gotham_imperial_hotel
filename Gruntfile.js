@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
       all: [
-        'js/app.js',
+        'public/js/app.js',
         'Gruntfile.js'
       ],
       options: {
@@ -14,17 +14,14 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['js/**', 'serviceworker.js', 'index.html', '!**/node_modules/**'],
+      files: ['public/**/*', '!**/node_modules/**'],
       tasks: ['default']
     },
-    connect: {
-      server: {
+    express: {
+      web: {
         options: {
-          protocol: 'http',
-          port: 8443,
-          hostname: '*',
-          base: '.',
-          open: 'http://localhost:8443/index.html'
+          script: 'server/index.js',
+          port: 8443
         }
       }
     }
@@ -32,10 +29,10 @@ module.exports = function(grunt) {
 
   // Load NPM Tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-express-server');
 
   // Register task(s).
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('serve', ['default', 'connect', 'watch']);
+  grunt.registerTask('serve', ['default', 'express', 'watch']);
 };
