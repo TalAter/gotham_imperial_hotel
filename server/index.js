@@ -9,11 +9,11 @@ var port = 8443;
 app.use(express.static('public'));
 
 app.get('/get-reservations', function(req, res) {
-  res.send(reservations.get());
+  res.json(reservations.get());
 });
 
 app.get('/get-events', function(req, res) {
-  res.send(events.get());
+  res.json(events.get());
 });
 
 
