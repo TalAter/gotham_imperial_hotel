@@ -1,4 +1,5 @@
 var moment = require('moment');
+var _ = require('lodash');
 
 const eventFixtures = [
   {
@@ -32,7 +33,7 @@ for (let event of eventFixtures) {
     date = moment(moment().format('YYYY/')+'/'+event.date, "YYYY/MM/DD");
   } else {
     // Else randomize a date within the next 30 days
-    date = moment().add(Math.floor(Math.random() * 30), 'days');
+    date = moment().add(_.random(0,30), 'days');
   }
 
   event.date = date.format('l');
