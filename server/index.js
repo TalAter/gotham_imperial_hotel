@@ -16,6 +16,19 @@ app.get('/get-events', function(req, res) {
   res.json(events.get());
 });
 
+app.get('/make-reservation', function(req, res) {
+  let arrivalDate = req.query['form--arrival-date'];
+  let nights      = req.query['form--nights'];
+  let guests      = req.query['form--guests'];
+  let reservationStatus = reservations.make(arrivalDate, nights, guests);
+  res.json({
+    arrivalDate: arrivalDate,
+    nights: nights,
+    guests: guests,
+    reservationStatus: reservationStatus
+  });
+});
+
 
 // Start the server
 app.listen(port, function() {
