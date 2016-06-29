@@ -5,3 +5,20 @@ if ('serviceWorker' in navigator) {
     console.log('Service Worker registration failed: ', err);
   });
 }
+
+
+$(document).ready(function() {
+  // Fetch and render upcoming events in the hotel
+  $.getJSON('/get-events', function(data) {
+    data.forEach(function(event) {
+      $(
+        '<div class="col-lg-2 col-md-4 col-sm-6 event-container"><div class="event-card">'+
+        '<div class="event-date">'+event.date+'</div>'+
+        '<img src="'+event.img+'" alt="Party" class="img-responsive" />'+
+        '<h4>'+event.title+'</h4>'+
+        '<p>'+event.description+'</p>'+
+        '</div></div>'
+      ).insertBefore('#events-container div.calendar-link-container');
+    });
+  });
+});
