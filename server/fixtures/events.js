@@ -36,7 +36,7 @@ for (let event of eventFixtures) {
     date = moment().add(_.random(0,30), 'days');
   }
 
-  event.date = date.format('l');
+  event.date = date.format('MMMM Do YYYY');
   events.push(event);
 }
 
