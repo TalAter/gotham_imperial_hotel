@@ -169,6 +169,9 @@ header h1, header h2 {
   text-align: right;
   margin-bottom: 6px;
 }
+.calendar-link-container a {
+  font-weight: 600;
+}
 
 /* Map Widget */
 #map-container {
