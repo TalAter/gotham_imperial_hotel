@@ -10,13 +10,23 @@ const eventFixtures = [
   },
   {
     "title": "Rooftop Party",
-    "description": "Come celebrate the re-opening of our famous rooftop bar.",
-    "img": "/img/event-new-year.jpg"
+    "description": "Come celebrate the re-opening of our rooftop bar, following last year's incident.",
+    "img": "/img/event-rooftop.jpg"
+  },
+  {
+    "title": "Horticultural Society Luncheon",
+    "description": "Come celebrate another great year with Gotham's horticultural elite.",
+    "img": "/img/event-horticultural.jpg"
+  },
+  {
+    "title": "Spring Charity Ball",
+    "description": "Gotham Imperial Hotel invites yout to help us fight TBA.",
+    "img": "/img/event-gala.jpg"
   },
   {
     "title": "Halloween Party",
-    "description": "Come celebrate the scariest night of the year with us.",
-    "img": "/img/event-new-year.jpg",
+    "description": "The scariest night of the year in Gotham&hellip; and that's saying a lot!",
+    "img": "/img/event-halloween.jpg",
     "date": "10/31"
   }
 ];
