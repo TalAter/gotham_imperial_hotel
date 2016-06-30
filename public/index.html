@@ -78,6 +78,38 @@
 </div>
 
 <div class="container-fluid" id="map-container">
+  <script>
+    function initMap() {
+      var customMapType = new google.maps.StyledMapType([{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"color":"#f3ece5"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#ddc9b6"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#ad9379"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#e6d8ca"}]}], {
+        name: 'Gotham style'
+      });
+      var customMapTypeId = 'gotham_style';
+
+      var coordinates = {lat: 41.765148, lng: -87.574854};
+
+      var map = new google.maps.Map(document.getElementById('map-container'), {
+        zoom: 14,
+        center: coordinates,
+        scrollwheel: false,
+        navigationControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        draggable: false,
+        mapTypeControlOptions: {
+          mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+        }
+      });
+
+      var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        title: 'Gotham Imperial Hotel'
+      });
+      map.mapTypes.set(customMapTypeId, customMapType);
+      map.setMapTypeId(customMapTypeId);
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap"></script>
 </div>
 
 <div class="container" id="footer-container">

@@ -180,7 +180,6 @@ header h1, header h2 {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-image: url('http://maps.googleapis.com/maps/api/staticmap?center=41.765148,-87.574854&size=640x300&scale=2&sensor=false&zoom=14&maptype=roadmap&markers=color:0xaf7e4c|41.765148,-87.574854&style=feature%3Aall%7Celement%3Alabels%7Cvisibility%3Aoff%7C&style=feature%3Aadministrative%7Celement%3Ageometry.stroke%7Cvisibility%3Aoff%7C&style=feature%3Aadministrative.land_parcel%7Celement%3Ageometry.stroke%7Cvisibility%3Aoff%7C&style=feature%3Alandscape%7Celement%3Ageometry.fill%7Ccolor%3A0xf3ece5%7C&style=feature%3Apoi%7Celement%3Ageometry.fill%7Ccolor%3A0xddc9b6%7C&style=feature%3Aroad%7Celement%3Ageometry.fill%7Ccolor%3A0xad9379%7C&style=feature%3Aroad%7Celement%3Alabels%7Cvisibility%3Asimplified%7C&style=feature%3Aroad.highway%7Celement%3Alabels%7Cvisibility%3Aoff%7C&style=feature%3Awater%7Celement%3Ageometry.fill%7Ccolor%3A0xe6d8ca%7C');
   background-position: center;
   height: 550px;
 }
