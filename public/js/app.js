@@ -14,7 +14,7 @@ $(document).ready(function() {
       $(
         '<div class="col-lg-2 col-md-4 col-sm-6 event-container"><div class="event-card">'+
         '<div class="event-date">'+event.date+'</div>'+
-        '<img src="'+event.img+'" alt="Party" class="img-responsive" />'+
+        '<img src="'+event.img+'" alt="'+event.title+'" class="img-responsive" />'+
         '<h4>'+event.title+'</h4>'+
         '<p>'+event.description+'</p>'+
         '</div></div>'
