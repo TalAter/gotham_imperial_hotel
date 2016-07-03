@@ -182,6 +182,7 @@ header h1, header h2 {
   background-size: cover;
   background-position: center;
   height: 550px;
+  transform: inherit!important;
 }
 
 /* Footer */
