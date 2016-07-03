@@ -27,125 +27,125 @@
     </div>
   </header>
 
-<div class="container-fluid" id="booking-widget-container">
-  <div class="row">
-    <div class="col-md-2" id="booking-widget-label">Book<br>Now</div>
-    <div class="col-md-10" id="booking-widget">
-      <form action="/make-reservation" method="get">
-        <div class="input-group">
-          <label for="form--arrival-date">Arrival:</label>
-          <input class="form-control" type="date" id="form--arrival-date" name="form--arrival-date">
-        </div>
-        <div class="input-group">
-          <label for="form--nights"># of nights:</label>
-          <input class="form-control" type="number" value="3" min="1" max="365" id="form--nights" name="form--nights">
-        </div>
-        <div class="input-group">
-          <label for="form--guests">Guests:</label>
-          <input class="form-control" type="number" value="2" min="1" max="10" id="form--guests" name="form--guests">
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-default btn-lg" type="submit">Check Availability</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid" id="about-hotel-container">
-  <div class="row">
-    <div class="col-md-6 about-hotel-box" id="about-hotel--spa">
-      <h3>Elegant Spa &amp; Zen Gardens</h3>
-      <p>A haven of tranquility and relaxation, our elegant spa &amp; zen gardens offer a peaceful and pampering escape from the busy city life, right in the heart of Gotham.</p>
-    </div>
-    <div class="col-md-6 about-hotel-box" id="about-hotel--luxury">
-      <h3>Experience Luxury</h3>
-      <p>Experience the <em>Outstanding Comfort of Superior Amenities</em>&trade; in our rooms and suites.</p>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid" id="events-container">
-  <div class="row">
-    <div class="col-lg-2 col-md-4 col-sm-6 event-container calendar-link-container"><div class="event-card">
-      <div class="event-date">&nbsp;</div>
-      <img src="/img/event-calendar-link.jpg" alt="View events calendar" class="img-responsive" />
-      <h4>Events Calendar</h4>
-      <p>View upcoming events, and your reservations.</p>
-      <a href="/calendar.html">View Calendar</a>
-    </div></div>
-  </div>
-</div>
-
-<div class="container-fluid" id="map-container">
-  <script>
-    function initMap() {
-      var customMapType = new google.maps.StyledMapType([{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"color":"#f3ece5"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#ddc9b6"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#ad9379"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#e6d8ca"}]}], {
-        name: 'Gotham style'
-      });
-      var customMapTypeId = 'gotham_style';
-
-      var coordinates = {lat: 41.765148, lng: -87.574854};
-
-      var map = new google.maps.Map(document.getElementById('map-container'), {
-        zoom: 14,
-        center: coordinates,
-        scrollwheel: false,
-        navigationControl: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        draggable: false,
-        mapTypeControlOptions: {
-          mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
-        }
-      });
-
-      var marker = new google.maps.Marker({
-        position: coordinates,
-        map: map,
-        title: 'Gotham Imperial Hotel'
-      });
-      map.mapTypes.set(customMapTypeId, customMapType);
-      map.setMapTypeId(customMapTypeId);
-    }
-  </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap"></script>
-</div>
-
-<div class="container" id="footer-container">
-  <div class="row">
-    <div class="col-md-3">
-      <h4>Gotham Imperial Hotel</h4>
-      <p>1 Imperial Plaza,</p>
-      <p>Gotham 754773</p>
-      <p>Democratic Republic of Gotham</p>
-    </div>
-    <div class="col-md-3">
-      <h4>Contact</h4>
-      <div class="row contact-details-row">
-        <div class="col-xs-4">Front Desk:</div>
-        <div class="col-xs-8">+731-555 010 555</div>
-      </div>
-      <div class="row contact-details-row">
-        <div class="col-xs-4">Reservations:</div>
-        <div class="col-xs-8">+731-555 011 555</div>
-      </div>
-      <div class="row contact-details-row">
-        <div class="col-xs-4">Concierge:</div>
-        <div class="col-xs-8">+731-555 012 555</div>
-      </div>
-    </div>
-    <div class="col-md-offset-1 col-md-5">
-      <div class="row slogan-row">
-        <div class="col-xs-6"><img src="/img/logo.png" alt="Gotham Imperial Hotel"></div>
-        <div class="col-xs-6">
-          <p>Experience the Outstanding Comfort of Superior Amenities&trade;</p>
-          <p>&copy; 2019 All Rights Reserved.</p>
-        </div>
+  <div class="container-fluid" id="booking-widget-container">
+    <div class="row">
+      <div class="col-md-2" id="booking-widget-label">Book<br>Now</div>
+      <div class="col-md-10" id="booking-widget">
+        <form action="/make-reservation" method="get">
+          <div class="input-group">
+            <label for="form--arrival-date">Arrival:</label>
+            <input class="form-control" type="date" id="form--arrival-date" name="form--arrival-date">
+          </div>
+          <div class="input-group">
+            <label for="form--nights"># of nights:</label>
+            <input class="form-control" type="number" value="3" min="1" max="365" id="form--nights" name="form--nights">
+          </div>
+          <div class="input-group">
+            <label for="form--guests">Guests:</label>
+            <input class="form-control" type="number" value="2" min="1" max="10" id="form--guests" name="form--guests">
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-default btn-lg" type="submit">Check Availability</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="container-fluid" id="about-hotel-container">
+    <div class="row">
+      <div class="col-md-6 about-hotel-box" id="about-hotel--spa">
+        <h3>Elegant Spa &amp; Zen Gardens</h3>
+        <p>A haven of tranquility and relaxation, our elegant spa &amp; zen gardens offer a peaceful and pampering escape from the busy city life, right in the heart of Gotham.</p>
+      </div>
+      <div class="col-md-6 about-hotel-box" id="about-hotel--luxury">
+        <h3>Experience Luxury</h3>
+        <p>Experience the <em>Outstanding Comfort of Superior Amenities</em>&trade; in our rooms and suites.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" id="events-container">
+    <div class="row">
+      <div class="col-lg-2 col-md-4 col-sm-6 event-container calendar-link-container"><div class="event-card">
+        <div class="event-date">&nbsp;</div>
+        <img src="/img/event-calendar-link.jpg" alt="View events calendar" class="img-responsive" />
+        <h4>Events Calendar</h4>
+        <p>View upcoming events, and your reservations.</p>
+        <a href="/calendar.html">View Calendar</a>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="container-fluid" id="map-container">
+    <script>
+      function initMap() {
+        var customMapType = new google.maps.StyledMapType([{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.land_parcel","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"color":"#f3ece5"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#ddc9b6"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#ad9379"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#e6d8ca"}]}], {
+          name: 'Gotham style'
+        });
+        var customMapTypeId = 'gotham_style';
+
+        var coordinates = {lat: 41.765148, lng: -87.574854};
+
+        var map = new google.maps.Map(document.getElementById('map-container'), {
+          zoom: 14,
+          center: coordinates,
+          scrollwheel: false,
+          navigationControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          draggable: false,
+          mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+          }
+        });
+
+        var marker = new google.maps.Marker({
+          position: coordinates,
+          map: map,
+          title: 'Gotham Imperial Hotel'
+        });
+        map.mapTypes.set(customMapTypeId, customMapType);
+        map.setMapTypeId(customMapTypeId);
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap"></script>
+  </div>
+
+  <div class="container" id="footer-container">
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Gotham Imperial Hotel</h4>
+        <p>1 Imperial Plaza,</p>
+        <p>Gotham 754773</p>
+        <p>Democratic Republic of Gotham</p>
+      </div>
+      <div class="col-md-3">
+        <h4>Contact</h4>
+        <div class="row contact-details-row">
+          <div class="col-xs-4">Front Desk:</div>
+          <div class="col-xs-8">+731-555 010 555</div>
+        </div>
+        <div class="row contact-details-row">
+          <div class="col-xs-4">Reservations:</div>
+          <div class="col-xs-8">+731-555 011 555</div>
+        </div>
+        <div class="row contact-details-row">
+          <div class="col-xs-4">Concierge:</div>
+          <div class="col-xs-8">+731-555 012 555</div>
+        </div>
+      </div>
+      <div class="col-md-offset-1 col-md-5">
+        <div class="row slogan-row">
+          <div class="col-xs-6"><img src="/img/logo.png" alt="Gotham Imperial Hotel"></div>
+          <div class="col-xs-6">
+            <p>Experience the Outstanding Comfort of Superior Amenities&trade;</p>
+            <p>&copy; 2019 All Rights Reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="/js/app.js"></script>
 
