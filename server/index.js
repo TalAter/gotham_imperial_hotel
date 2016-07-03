@@ -8,11 +8,11 @@ var port = 8443;
 // Define routes
 app.use(express.static('public'));
 
-app.get('/get-reservations', function(req, res) {
+app.get('/reservations.json', function(req, res) {
   res.json(reservations.get());
 });
 
-app.get('/get-events', function(req, res) {
+app.get('/events.json', function(req, res) {
   res.json(events.get());
 });
 

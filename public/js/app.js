@@ -9,7 +9,7 @@ if ('serviceWorker' in navigator) {
 
 $(document).ready(function() {
   // Fetch and render upcoming events in the hotel
-  $.getJSON('/get-events', function(data) {
+  $.getJSON('/events.json', function(data) {
     data.forEach(function(event) {
       $(
         '<div class="col-lg-2 col-md-4 col-sm-6 event-container"><div class="event-card">'+
