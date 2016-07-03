@@ -26,6 +26,8 @@
   "indent"    : 2,
   "esversion" : 6,
   "globals":  {
-    "$":        false
+    "self":         false,
+    "caches":       false,
+    "$":            false
   }
 }
