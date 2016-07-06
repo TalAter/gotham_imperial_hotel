@@ -74,7 +74,7 @@ self.addEventListener('fetch', function(event) {
     );
   // Handle analytics requests
   } else if (requestURL.host === 'www.google-analytics.com') {
-    return fetch(event.request);
+    event.respondWith(fetch(event.request));
   // Handle requests for files cached during installation
   } else if (
     CACHED_URLS.indexOf(requestURL.href) === -1 ||
