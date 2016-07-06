@@ -68,8 +68,8 @@ self.addEventListener('fetch', function(event) {
             return networkResponse;
           }).catch(function() {
             return cache.match('/img/event-default.jpg');
-          })
-        })
+          });
+        });
       })
     );
   // Handle analytics requests
@@ -84,7 +84,7 @@ self.addEventListener('fetch', function(event) {
       caches.open(CACHE_NAME).then(function(cache) {
         return cache.match(event.request).then(function(response) {
           return response || fetch(event.request);
-        })
+        });
       })
     );
   }
