@@ -23,10 +23,11 @@ var CACHED_URLS = [
   // JSON
   '/events.json'
 ];
-var googleMapsAPIJS = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap';
+var googleMapsAPIJS = 'https://maps.googleapis.com/maps/api/js?key='+
+  'AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap';
 
 self.addEventListener('install', function(event) {
-  // Cache everything in CACHED_URLS. Installation will fail if something fails to cache
+  // Cache everything in CACHED_URLS. Installation fails if anything fails to cache
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
       return cache.addAll(CACHED_URLS);
@@ -75,8 +76,8 @@ self.addEventListener('fetch', function(event) {
   } else if (requestURL.pathname.indexOf('/img/event-') === 0) {
     event.respondWith(
       caches.open(CACHE_NAME).then(function(cache) {
-        return cache.match(event.request).then(function(cachedResponse) {
-          return cachedResponse || fetch(event.request).then(function(networkResponse) {
+        return cache.match(event.request).then(function(cacheResponse) {
+          return cacheResponse||fetch(event.request).then(function(networkResponse) {
             cache.put(event.request, networkResponse.clone());
             return networkResponse;
           }).catch(function() {
