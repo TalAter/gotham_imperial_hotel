@@ -9,6 +9,7 @@ var CACHED_URLS = [
   // JavaScript
   'https://code.jquery.com/jquery-3.0.0.min.js',
   '/js/app.js',
+  '/js/offline-map.js',
   // Images
   '/img/logo.png',
   '/img/logo-header.png',
@@ -18,9 +19,11 @@ var CACHED_URLS = [
   '/img/about-hotel-spa.jpg',
   '/img/about-hotel-luxury.jpg',
   '/img/event-default.jpg',
+  '/img/map-offline.jpg',
   // JSON
   '/events.json'
 ];
+var googleMapsAPIJS = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap';
 
 self.addEventListener('install', function(event) {
   // Cache everything in CACHED_URLS. Installation will fail if something fails to cache
@@ -44,6 +47,16 @@ self.addEventListener('fetch', function(event) {
           });
           return cachedResponse || fetchPromise;
         });
+      })
+    );
+  // Handle requests for Google Maps JavaScript API file
+  } else if (requestURL.href === googleMapsAPIJS) {
+    event.respondWith(
+      fetch(
+        googleMapsAPIJS+'&'+Date.now(),
+        { mode: 'no-cors', cache: 'no-store' }
+      ).catch(function() {
+        return caches.match('/js/offline-map.js');
       })
     );
   // Handle requests for events JSON file
