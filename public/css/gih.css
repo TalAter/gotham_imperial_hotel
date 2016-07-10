@@ -220,3 +220,24 @@ header h1, header h2 {
 #footer-container .slogan-row img {
   width: 150px;
 }
+
+/* Events page */
+body.events-page header {
+  min-height: 75px!important;
+  background-position-y: center;
+  border-bottom: 1px solid #a3915e;
+}
+
+div.calendar-month {
+  background-color: #242424;
+  color: #a3915e;
+  font-weight: 600;
+  font-size: 50px;
+  padding: 24px 20px 29px;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 27px;
+}
+div.calendar-month p:nth-child(1) {
+  font-size: 34px;
+}
