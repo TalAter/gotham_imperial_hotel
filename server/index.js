@@ -8,6 +8,10 @@ var port = 8443;
 // Define routes
 app.use(express.static('public'));
 
+app.get('/my-account', function(req, res) {
+  res.sendFile('my-account.html', {root: 'public'});
+});
+
 app.get('/reservations.json', function(req, res) {
   res.json(reservations.get());
 });
