@@ -221,23 +221,91 @@ header h1, header h2 {
   width: 150px;
 }
 
-/* Events page */
-body.events-page header {
+/* My account page */
+body.my-account-page header {
   min-height: 75px!important;
   background-position-y: center;
   border-bottom: 1px solid #a3915e;
 }
 
-div.calendar-month {
+body.my-account-page #booking-widget {
   background-color: #242424;
-  color: #a3915e;
-  font-weight: 600;
-  font-size: 50px;
-  padding: 24px 20px 29px;
-  text-transform: uppercase;
-  text-align: right;
-  line-height: 27px;
 }
-div.calendar-month p:nth-child(1) {
-  font-size: 34px;
+
+div#reservations-events-container {
+  background-color: #a3915e;
+  color: #242424;
+  padding: 20px 0;
+}
+div.reservation-card {
+  background-color: #fff;
+  -webkit-box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.15);
+  box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.15);
+  margin: 25px 0;
+  height: 152px;
+  border: 1px solid #fff;
+}
+img.reserved-hotel-image {
+  width: 150px;
+  height: 150px;
+  float: left;
+}
+div.reservation-details {
+  height: 107px;
+}
+div.reserved-hotel-details {
+  float: left;
+  margin: 15px 0 0 25px;
+}
+div.reserved-hotel-details strong {
+  font-size: 16px;
+}
+div.reserved-hotel-details p {
+  margin: 2px 0 0;
+  font-size: 12px;
+}
+div.reservation-price {
+  float: right;
+  margin: 30px 25px 0 0;
+  text-align: right;
+}
+div.reservation-price strong {
+  font-size: 22px;
+}
+div.reservation-price p {
+  margin: 0;
+}
+div.reservation-actions {
+  height: 23px;
+  font-weight: 600;
+}
+div.reservation-actions a {
+  margin-left: 25px;
+  text-decoration: underline;
+  font-size: 11px;
+}
+div.reservation-status {
+  float: right;
+  margin-right: 25px;
+}
+div.reservation-meta-data {
+  height: 20px;
+  background-color: #cfcfcf;
+  font-size: 11px;
+}
+div.reservation-meta-data span {
+  margin-left: 25px;
+  line-height: 20px;
+}
+@media (max-width: 610px) {
+  img.reserved-hotel-image {
+    display: none;
+  }
+  div.reservation-actions a, div.reserved-hotel-details, div.reservation-meta-data span {
+    margin-left: 15px;
+  }
+  div.reservation-price, div.reservation-status {
+    margin-right: 15px;
+  }
 }
