@@ -285,6 +285,11 @@ div.reservation-actions a {
   text-decoration: underline;
   font-size: 11px;
 }
+div.reservation-actions a.reservation-action--error {
+  text-decoration: none;
+  color: #f00;
+  cursor: not-allowed;
+}
 div.reservation-status {
   float: right;
   margin-right: 25px;
