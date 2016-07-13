@@ -4,7 +4,7 @@
   "devel"     : false,
   "camelcase" : true,
   "curly"     : true,
-  "latedef"   : true,
+  "latedef"   : false,
   "unused"    : true,
   "trailing"  : true,
   "eqeqeq"    : true,
