@@ -13,6 +13,13 @@ var get = function() {
   return reservations.map(formatResponseObject);
 };
 
+var getById = function(id) {
+  var reservation = db.get('reservations')
+  .filter({id: id})
+  .value();
+  return reservation[0] || undefined;
+};
+
 var make = function(id, arrivalDate, nights, guests) {
   if (guests > 5 || !arrivalDate || !nights || !guests) {
     return false;
@@ -36,5 +43,7 @@ var make = function(id, arrivalDate, nights, guests) {
 
 module.exports = {
   get: get,
-  make: make
+  getById: getById,
+  make: make,
+  formatResponseObject: formatResponseObject
 };
