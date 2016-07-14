@@ -3,6 +3,7 @@ var reservations = require('./reservations.js');
 var events = require('./events.js');
 var app = express();
 var port = 8443;
+var moment = require('moment');
 
 
 // Define routes
@@ -14,6 +15,17 @@ app.get('/my-account', function(req, res) {
 
 app.get('/reservations.json', function(req, res) {
   res.json(reservations.get());
+});
+
+app.get('/reservation-details.json', function(req, res) {
+  let reservation = reservations.getById(req.query['id']);
+  if (reservation.bookedOn) {
+    // reservations are automatically confirmed 3 seconds after booking time
+    if (moment().diff(moment(reservation.bookedOn), 'seconds') >= 3) {
+      reservation.status = 'Confirmed';
+    }
+  }
+  res.json(reservations.formatResponseObject(reservation));
 });
 
 app.get('/events.json', function(req, res) {
