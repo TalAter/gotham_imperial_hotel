@@ -12,11 +12,11 @@ var make = function(id, arrivalDate, nights, guests) {
   }
   let reservationDetails = {
     "id":           id,
-    "arrivalDate":  arrivalDate,
+    "arrivalDate":  moment(arrivalDate).format('MMMM Do YYYY'),
     "nights":       nights,
     "guests":       guests,
     "status":       'Confirmed',
-    "bookedOn":      moment().format('MMMM Do YYYY'),
+    "bookedOn":     moment().format('MMMM Do YYYY'),
     "price":        nights*_.random(200,249)
   };
 
