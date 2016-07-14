@@ -75,6 +75,9 @@ var renderReservation = function(reservation) {
     '</div>'
   );
   $('#reservations-container').append(newReservation);
+  if (reservation['status'] !== 'Confirmed') {
+    newReservation.addClass('reservation-card--unconfirmed');
+  }
 
   // Adds an event listener to the modify reservation button.
   $('#reservation-'+reservation['id']+' a').click(function() {
@@ -92,4 +95,10 @@ var updateReservationDisplay = function(reservation) {
   $('.reservation-price strong', reservationNode).text('§'+reservation.price+'.99');
   $('.reservation-status', reservationNode).text(reservation.status);
   $('.arrivalDate span', reservationNode).text(reservation.arrivalDate);
+  if (reservation['status'] !== 'Confirmed') {
+    reservationNode.addClass('reservation-card--unconfirmed');
+  } else {
+    reservationNode.removeClass('reservation-card--unconfirmed');    
+  }
+
 };
