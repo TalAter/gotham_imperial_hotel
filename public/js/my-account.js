@@ -16,7 +16,19 @@ $(document).ready(function() {
     addBooking(arrivalDate, nights, guests);
     return false;
   });
+
+  // Periodically check for unconfirmed bookings
+  setInterval(checkUnconfirmedBookings, 5000);
 });
+
+// Go over unconfirmed bookings, and verify their status against the server.
+var checkUnconfirmedBookings = function() {
+  $('.reservation-card--unconfirmed').each(function() {
+    $.getJSON('/reservation-details.json', {id: $(this).data('id')}, function(data) {
+      updateReservationDisplay(data);
+    });
+  });
+};
 
 // Adds a booking as pending to the DOM, and try to contact server to book it.
 var addBooking = function(arrivalDate, nights, guests) {
@@ -50,7 +62,7 @@ var addBooking = function(arrivalDate, nights, guests) {
 // Renders a reservation card and adds it to the DOM.
 var renderReservation = function(reservation) {
   var newReservation = $(
-    '<div class="reservation-card" id="reservation-'+reservation['id']+'">'+
+    '<div class="reservation-card" id="reservation-'+reservation['id']+'" data-id="'+reservation['id']+'">'+
       '<img src="/img/reservation-gih.jpg" alt="Gotham Imperial Hotel" class="reserved-hotel-image">'+
       '<div class="reservation-details">'+
         '<div class="reserved-hotel-details">'+
@@ -98,7 +110,7 @@ var updateReservationDisplay = function(reservation) {
   if (reservation['status'] !== 'Confirmed') {
     reservationNode.addClass('reservation-card--unconfirmed');
   } else {
-    reservationNode.removeClass('reservation-card--unconfirmed');    
+    reservationNode.removeClass('reservation-card--unconfirmed');
   }
 
 };
