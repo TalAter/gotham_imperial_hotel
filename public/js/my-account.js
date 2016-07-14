@@ -56,7 +56,7 @@ var renderReservation = function(reservation) {
         '<div class="reserved-hotel-details">'+
           '<strong>Gotham Imperial Hotel</strong>'+
           '<p>1 Imperial Plaza, Gotham.</p>'+
-          '<p>Check-in: '+reservation['arrivalDate']+'.</p>'+
+          '<p class="arrivalDate">Check-in: <span>'+reservation['arrivalDate']+'</span>.</p>'+
           '<p>'+reservation['nights']+' nights. '+reservation['guests']+' guests.</p>'+
         '</div>'+
         '<div class="reservation-price">'+
@@ -91,4 +91,5 @@ var updateReservationDisplay = function(reservation) {
   $('.reservation-bookedOn', reservationNode).text(reservation.bookedOn);
   $('.reservation-price strong', reservationNode).text('§'+reservation.price+'.99');
   $('.reservation-status', reservationNode).text(reservation.status);
+  $('.arrivalDate span', reservationNode).text(reservation.arrivalDate);
 };
