@@ -304,8 +304,10 @@ div.reservation-meta-data {
   font-size: 11px;
 }
 div.reservation-meta-data span {
-  margin-left: 25px;
   line-height: 20px;
+}
+div.reservation-meta-data strong {
+  margin-left: 25px;
 }
 @media (max-width: 610px) {
   img.reserved-hotel-image {

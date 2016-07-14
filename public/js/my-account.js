@@ -8,9 +8,33 @@ $(document).ready(function() {
     });
   });
 
+  // Add booking widget functionality
+  $('#booking-widget-container button').click(function() {
+    var arrivalDate = $('#form--arrival-date').val();
+    var nights = $('#form--nights').val();
+    var guests = $('#form--guests').val();
+    addBooking(arrivalDate, nights, guests);
+    return false;
+  });
 });
 
-
+// Adds a booking as pending to the DOM, and try to contact server to book it.
+var addBooking = function(arrivalDate, nights, guests) {
+  if (!arrivalDate || !nights || !guests) {
+    return;
+  }
+  var reservationDetails = {
+    id: Date.now().toString().substring(3,11),
+    arrivalDate:  arrivalDate,
+    nights:       nights,
+    guests:       guests,
+    status:       'Awaiting confirmation'
+  };
+  renderReservation(reservationDetails);
+  $.getJSON('/make-reservation', reservationDetails, function(data) {
+    updateReservationDisplay(data);
+  });
+};
 
 
 
@@ -32,21 +56,21 @@ var renderReservation = function(reservation) {
         '<div class="reserved-hotel-details">'+
           '<strong>Gotham Imperial Hotel</strong>'+
           '<p>1 Imperial Plaza, Gotham.</p>'+
-          '<p>Check-in: '+reservation['check_in']+'.</p>'+
+          '<p>Check-in: '+reservation['arrivalDate']+'.</p>'+
           '<p>'+reservation['nights']+' nights. '+reservation['guests']+' guests.</p>'+
         '</div>'+
         '<div class="reservation-price">'+
           '<p>Total price</p>'+
-          '<p><strong>§'+reservation['price']+'.99</strong></p>'+
+          '<p><strong>'+(reservation['price'] ? '§'+reservation['price']+'.99' : '?')+'</strong></p>'+
         '</div>'+
       '</div>'+
       '<div class="reservation-actions">'+
         '<a href="#">Modify booking details</a>'+
-        '<div class="reservation-status">Awaiting confirmation</div>'+
+        '<div class="reservation-status">'+reservation['status']+'</div>'+
       '</div>'+
       '<div class="reservation-meta-data">'+
-        '<span><strong>Order number:</strong> '+reservation['id']+'</span>'+
-        '<span><strong>Booked on:</strong> '+reservation['booked_on']+'</span>'+
+        '<strong>Order number:</strong> <span>'+reservation['id']+'</span>'+
+        '<strong>Booked on:</strong> <span class="reservation-bookedOn">'+(reservation['bookedOn'] ? reservation['bookedOn'] : 'n/a')+'</span>'+
       '</div>'+
     '</div>'
   );
@@ -60,4 +84,11 @@ var renderReservation = function(reservation) {
     return false;
   });
 
+};
+
+var updateReservationDisplay = function(reservation) {
+  var reservationNode = $('#reservation-'+reservation.id);
+  $('.reservation-bookedOn', reservationNode).text(reservation.bookedOn);
+  $('.reservation-price strong', reservationNode).text('§'+reservation.price+'.99');
+  $('.reservation-status', reservationNode).text(reservation.status);
 };

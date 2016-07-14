@@ -21,16 +21,12 @@ app.get('/events.json', function(req, res) {
 });
 
 app.get('/make-reservation', function(req, res) {
-  let arrivalDate = req.query['form--arrival-date'];
-  let nights      = req.query['form--nights'];
-  let guests      = req.query['form--guests'];
-  let reservationStatus = reservations.make(arrivalDate, nights, guests);
-  res.json({
-    arrivalDate: arrivalDate,
-    nights: nights,
-    guests: guests,
-    reservationStatus: reservationStatus
-  });
+  let id          = req.query['id'];
+  let arrivalDate = req.query['arrivalDate'];
+  let nights      = req.query['nights'];
+  let guests      = req.query['guests'];
+  let reservationStatus = reservations.make(id, arrivalDate, nights, guests);
+  res.json(reservationStatus);
 });
 
 

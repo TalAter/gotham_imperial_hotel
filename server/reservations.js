@@ -1,21 +1,30 @@
 var db = require('./db.js');
+var moment = require('moment');
+var _ = require('lodash');
 
 var get = function() {
   return db.get('reservations').value();
 };
 
-var make = function(arrivalDate, nights, guests) {
+var make = function(id, arrivalDate, nights, guests) {
   if (guests > 5 || !arrivalDate || !nights || !guests) {
     return false;
   }
+  let reservationDetails = {
+    "id":           id,
+    "arrivalDate":  arrivalDate,
+    "nights":       nights,
+    "guests":       guests,
+    "status":       'Confirmed',
+    "bookedOn":      moment().format('MMMM Do YYYY'),
+    "price":        nights*_.random(200,249)
+  };
+
   db.get('reservations')
-    .push({
-      arrivalDate: arrivalDate,
-      nights: nights,
-      guests: guests
-    })
+    .push(reservationDetails)
     .value();
-  return true;
+
+  return reservationDetails;
 };
 
 module.exports = {
