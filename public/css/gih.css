@@ -324,4 +324,30 @@ div.reservation-meta-data strong {
   }
 }
 
+@-webkit-keyframes throbbing {
+  0%   { opacity: 1; }
+  70%  { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes throbbing {
+  0%   { opacity: 1; }
+  70%  { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@-o-keyframes throbbing {
+  0%   { opacity: 1; }
+  70%  { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@keyframes throbbing {
+  0%   { opacity: 1; }
+  70%  { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+div.reservation-card.reservation-card--unconfirmed {
+  -webkit-animation: throbbing 2000ms 300ms infinite ease-out;
+  -moz-animation:    throbbing 2000ms 300ms infinite ease-out;
+  -o-animation:      throbbing 2000ms 300ms infinite ease-out;
+  animation:         throbbing 2000ms 300ms infinite ease-out;
 }
