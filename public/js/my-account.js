@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   // Fetch and render user reservations
   $.getJSON('/reservations.json', function(data) {
+    $('div#reservation-loading').hide();
     data.forEach(function(reservation) {
       renderReservation(reservation);
     });

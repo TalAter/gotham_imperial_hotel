@@ -246,6 +246,10 @@ div.reservation-card {
   height: 152px;
   border: 1px solid #fff;
 }
+div#reservation-loading {
+  text-align: center;
+  padding-top: 35px;
+}
 img.reserved-hotel-image {
   width: 150px;
   height: 150px;
