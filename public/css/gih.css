@@ -313,10 +313,15 @@ div.reservation-meta-data strong {
   img.reserved-hotel-image {
     display: none;
   }
-  div.reservation-actions a, div.reserved-hotel-details, div.reservation-meta-data span {
-    margin-left: 15px;
+  div.reservation-actions a, div.reserved-hotel-details, div.reservation-meta-data strong {
+    margin-left: 10px;
   }
   div.reservation-price, div.reservation-status {
-    margin-right: 15px;
+    margin-right: 10px;
   }
+  div.reserved-hotel-details {
+    margin-top: 10px;
+  }
+}
+
 }
