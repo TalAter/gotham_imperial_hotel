@@ -12,7 +12,7 @@ for (let i = 0; i < 2; i++) {
     "nights":     _.random(1,4),
     "guests":     _.random(1,3),
     "status":     "Confirmed",
-    "bookedOn":  moment().subtract(_.random(1,6), 'days').format('MMMM Do YYYY')
+    "bookedOn":  moment().subtract(_.random(1,6), 'days').format()
   };
   reservation.price = reservation.nights*_.random(200,249);
 
