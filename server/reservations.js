@@ -22,7 +22,7 @@ var make = function(id, arrivalDate, nights, guests) {
     "arrivalDate":  moment(arrivalDate).format('MMMM Do YYYY'),
     "nights":       nights,
     "guests":       guests,
-    "status":       'Confirmed',
+    "status":       'Awaiting confirmation',
     "bookedOn":     moment().format(),
     "price":        nights*_.random(200,249)
   };
