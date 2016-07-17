@@ -15,7 +15,7 @@ $(document).ready(function() {
     var guests = $('#form--guests').val();
     var id = Date.now().toString().substring(3,11);
     if (!arrivalDate || !nights || !guests) {
-      return;
+      return false;
     }
     addBooking(id, arrivalDate, nights, guests);
     return false;
