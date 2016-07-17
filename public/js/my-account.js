@@ -1,12 +1,7 @@
 $(document).ready(function() {
 
   // Fetch and render user reservations
-  $.getJSON('/reservations.json', function(data) {
-    $('div#reservation-loading').hide();
-    data.forEach(function(reservation) {
-      renderReservation(reservation);
-    });
-  });
+  populateReservations();
 
   // Add booking widget functionality
   $('#booking-widget-container button').click(function() {
@@ -24,6 +19,16 @@ $(document).ready(function() {
   // Periodically check for unconfirmed bookings
   setInterval(checkUnconfirmedBookings, 5000);
 });
+
+// Fetches reservations from server and renders them to the page
+var populateReservations = function() {
+  $.getJSON('/reservations.json', function(data) {
+    $('div#reservation-loading').hide();
+    data.forEach(function(reservation) {
+      renderReservation(reservation);
+    });
+  });
+};
 
 // Go over unconfirmed bookings, and verify their status against the server.
 var checkUnconfirmedBookings = function() {
