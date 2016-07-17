@@ -13,7 +13,11 @@ $(document).ready(function() {
     var arrivalDate = $('#form--arrival-date').val();
     var nights = $('#form--nights').val();
     var guests = $('#form--guests').val();
-    addBooking(arrivalDate, nights, guests);
+    var id = Date.now().toString().substring(3,11);
+    if (!arrivalDate || !nights || !guests) {
+      return;
+    }
+    addBooking(id, arrivalDate, nights, guests);
     return false;
   });
 
@@ -31,12 +35,9 @@ var checkUnconfirmedBookings = function() {
 };
 
 // Adds a booking as pending to the DOM, and try to contact server to book it.
-var addBooking = function(arrivalDate, nights, guests) {
-  if (!arrivalDate || !nights || !guests) {
-    return;
-  }
+var addBooking = function(id, arrivalDate, nights, guests) {
   var reservationDetails = {
-    id: Date.now().toString().substring(3,11),
+    id:           id,
     arrivalDate:  arrivalDate,
     nights:       nights,
     guests:       guests,
