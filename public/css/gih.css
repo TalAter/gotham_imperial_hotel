@@ -17,7 +17,8 @@ html,body {
 }
 a.navbar-brand {
   background-image: url('/img/logo-top-background.png');
-  width: 253px;
+  background-repeat: no-repeat;
+  width: 252px;
   height: 96px;
   margin-left: 25px;
   position: absolute;
