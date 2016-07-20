@@ -22,12 +22,7 @@ $(document).ready(function() {
 
 // Fetches reservations from server and renders them to the page
 var populateReservations = function() {
-  $.getJSON('/reservations.json', function(data) {
-    $('div#reservation-loading').hide();
-    data.forEach(function(reservation) {
-      renderReservation(reservation);
-    });
-  });
+  $.getJSON('/reservations.json', renderReservations);
 };
 
 // Go over unconfirmed bookings, and verify their status against the server.
@@ -64,6 +59,14 @@ var addBooking = function(id, arrivalDate, nights, guests) {
 /* You can ignore it, or you can send angry tweets about it to  */
 /* @TalAter                                                     */
 /* ************************************************************ */
+
+// Goes over an array of reservations, and renders each of them
+var renderReservations = function(data) {
+  $('div#reservation-loading').hide();
+  data.forEach(function(reservation) {
+    renderReservation(reservation);
+  });
+};
 
 // Renders a reservation card and adds it to the DOM.
 var renderReservation = function(reservation) {
