@@ -47,6 +47,20 @@ var addToObjectStore = function(storeName, object) {
   }, "readwrite");
 };
 
+var updateInObjectStore = function(storeName, id, object) {
+  openObjectStore("reservations", function(objectStore) {
+    objectStore.openCursor().onsuccess = function(event) {
+      var cursor = event.target.result;
+      if (!cursor) { return; }
+      if (cursor.value.id === id) {
+        cursor.update(object);
+        return;
+      }
+      cursor.continue();
+    };
+  }, "readwrite");
+};
+
 var getReservations = function(successCallback) {
   var reservations = [];
   var objectStore = openObjectStore("reservations", function(objectStore) {
@@ -110,6 +124,7 @@ var populateReservations = function() {
 var checkUnconfirmedBookings = function() {
   $('.reservation-card--unconfirmed').each(function() {
     $.getJSON('/reservation-details.json', {id: $(this).data('id')}, function(data) {
+      updateInObjectStore("reservations", data.id, data);
       updateReservationDisplay(data);
     });
   });
