@@ -25,7 +25,7 @@ var make = function(id, arrivalDate, nights, guests) {
     return false;
   }
   let reservation = {
-    "id":           id,
+    "id":           id.toString(),
     "arrivalDate":  moment(arrivalDate).format('MMMM Do YYYY'),
     "nights":       nights,
     "guests":       guests,
