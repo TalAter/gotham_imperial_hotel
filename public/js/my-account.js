@@ -41,6 +41,12 @@ var openObjectStore = function(storeName, successCallback, transactionMode) {
   return true;
 };
 
+var addToObjectStore = function(storeName, object) {
+  openObjectStore(storeName, function(store) {
+    store.add(object);
+  }, "readwrite");
+};
+
 var getReservations = function(successCallback) {
   var reservations = [];
   var objectStore = openObjectStore("reservations", function(objectStore) {
@@ -109,7 +115,7 @@ var checkUnconfirmedBookings = function() {
   });
 };
 
-// Adds a booking as pending to the DOM, and try to contact server to book it.
+// Adds a booking as pending to IndexedDB, the DOM, and the server.
 var addBooking = function(id, arrivalDate, nights, guests) {
   var reservationDetails = {
     id:           id,
@@ -118,6 +124,7 @@ var addBooking = function(id, arrivalDate, nights, guests) {
     guests:       guests,
     status:       'Awaiting confirmation'
   };
+  addToObjectStore("reservations", reservationDetails);
   renderReservation(reservationDetails);
   $.getJSON('/make-reservation', reservationDetails, function(data) {
     updateReservationDisplay(data);
