@@ -30,6 +30,26 @@ a.navbar-brand img {
   height: 69px;
   margin: 15px 39px;
 }
+@media (max-width: 400px) {
+  a.navbar-brand {
+    width: auto;
+    height: auto;
+    background-image: none;
+  }
+  a.navbar-brand img {
+    width: 87px;
+    height: 34px;
+    margin: 7px 19px;
+  }
+}
+div.navbar-links {
+  margin: 14px 0 0 0;
+  float: right!important;
+}
+div.navbar-links a {
+  color: #a3915e;
+  font-weight: 600;
+}
 
 /* Header */
 header {
