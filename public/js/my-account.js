@@ -1,3 +1,76 @@
+var DB_VERSION = 1;
+var DB_NAME = "gih-reservations";
+
+// Open a request to open a database, and return that request
+var openDatabase = function() {
+  // Make sure IndexedDB is supported before attempting to use it
+  if (!window.indexedDB) {
+    return false;
+  }
+
+  var request = window.indexedDB.open(DB_NAME, DB_VERSION);
+
+  request.onerror = function(event) {
+    console.log("Database error: ", event.target.errorCode);
+  };
+
+  request.onupgradeneeded = function(event) {
+    var db = event.target.result;
+    if (!db.objectStoreNames.contains("reservations")) {
+      db.createObjectStore("reservations",
+        { keyPath: "id" }
+      );
+    }
+  };
+
+  return request;
+};
+
+var openObjectStore = function(storeName, successCallback, transactionMode) {
+  var db = openDatabase();
+  if (!db) {
+    return false;
+  }
+  db.onsuccess = function(event) {
+    var db = event.target.result;
+    var objectStore = db
+      .transaction(storeName, transactionMode)
+      .objectStore(storeName);
+    successCallback(objectStore);
+  };
+  return true;
+};
+
+var getReservations = function(successCallback) {
+  var reservations = [];
+  var objectStore = openObjectStore("reservations", function(objectStore) {
+    objectStore.openCursor().onsuccess = function(event) {
+      var cursor = event.target.result;
+      if (cursor) {
+        reservations.push(cursor.value);
+        cursor.continue();
+      } else {
+        if (reservations.length > 0) {
+          successCallback(reservations);
+        } else {
+          $.getJSON('/reservations.json', function(reservations) {
+            openObjectStore("reservations", function(reservationsStore) {
+              for (var i = 0; i < reservations.length; i++) {
+                reservationsStore.add(reservations[i]);
+              }
+              getReservations(successCallback);
+            }, "readwrite");
+          });
+
+        }
+      }
+    };
+  });
+  if (!objectStore) {
+    $.getJSON('/reservations.json', successCallback);
+  }
+};
+
 $(document).ready(function() {
 
   // Fetch and render user reservations
@@ -22,7 +95,9 @@ $(document).ready(function() {
 
 // Fetches reservations from server and renders them to the page
 var populateReservations = function() {
-  $.getJSON('/reservations.json', renderReservations);
+  getReservations(function(reservations) {
+    renderReservations(reservations);
+  });
 };
 
 // Go over unconfirmed bookings, and verify their status against the server.
