@@ -3,8 +3,10 @@ var moment = require('moment');
 var _ = require('lodash');
 
 var formatResponseObject = function(reservation) {
-  reservation = _.clone(reservation);
-  reservation.bookedOn = moment(reservation.bookedOn).format('MMMM Do YYYY');
+  if (reservation) {
+    reservation = _.clone(reservation);
+    reservation.bookedOn = moment(reservation.bookedOn).format('MMMM Do YYYY');
+  }
   return reservation;
 };
 

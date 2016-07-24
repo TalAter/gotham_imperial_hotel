@@ -19,7 +19,7 @@ app.get('/reservations.json', function(req, res) {
 
 app.get('/reservation-details.json', function(req, res) {
   let reservation = reservations.getById(req.query['id']);
-  if (reservation.bookedOn) {
+  if (reservation && reservation.bookedOn) {
     // reservations are automatically confirmed 3 seconds after booking time
     if (moment().diff(moment(reservation.bookedOn), 'seconds') >= 3) {
       reservation.status = 'Confirmed';
