@@ -2,6 +2,7 @@ var CACHE_NAME = 'gih-cache-v6';
 var CACHED_URLS = [
   // Our HTML
   '/index.html',
+  '/my-account.html',
   // Stylesheets
   '/css/gih.css',
   'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
@@ -10,6 +11,7 @@ var CACHED_URLS = [
   'https://code.jquery.com/jquery-3.0.0.min.js',
   '/js/app.js',
   '/js/offline-map.js',
+  '/js/my-account.js',
   // Images
   '/img/logo.png',
   '/img/logo-header.png',
@@ -48,6 +50,13 @@ self.addEventListener('fetch', function(event) {
           });
           return cachedResponse || fetchPromise;
         });
+      })
+    );
+  // Handle requests for the account page
+  } else if (requestURL.pathname === '/my-account' || requestURL.pathname === '/my-account.html') {
+    event.respondWith(
+      caches.match('/my-account.html').then(function(response) {
+        return response || fetch('/my-account.html');
       })
     );
   // Handle requests for Google Maps JavaScript API file
