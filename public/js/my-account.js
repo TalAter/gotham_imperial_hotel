@@ -78,7 +78,7 @@ var getReservations = function(successCallback) {
               for (var i = 0; i < reservations.length; i++) {
                 reservationsStore.add(reservations[i]);
               }
-              getReservations(successCallback);
+              successCallback(reservations);
             }, "readwrite");
           });
 
