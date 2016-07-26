@@ -48,7 +48,7 @@ var addToObjectStore = function(storeName, object) {
 };
 
 var updateInObjectStore = function(storeName, id, object) {
-  openObjectStore("reservations", function(objectStore) {
+  openObjectStore(storeName, function(objectStore) {
     objectStore.openCursor().onsuccess = function(event) {
       var cursor = event.target.result;
       if (!cursor) { return; }
