@@ -115,9 +115,7 @@ $(document).ready(function() {
 
 // Fetches reservations from server and renders them to the page
 var populateReservations = function() {
-  getReservations(function(reservations) {
-    renderReservations(reservations);
-  });
+  getReservations(renderReservations);
 };
 
 // Go over unconfirmed bookings, and verify their status against the server.
