@@ -63,7 +63,7 @@ var updateInObjectStore = function(storeName, id, object) {
 
 var getReservations = function(successCallback) {
   var reservations = [];
-  var objectStore = openObjectStore("reservations", function(objectStore) {
+  var db = openObjectStore("reservations", function(objectStore) {
     objectStore.openCursor().onsuccess = function(event) {
       var cursor = event.target.result;
       if (cursor) {
@@ -86,7 +86,7 @@ var getReservations = function(successCallback) {
       }
     };
   });
-  if (!objectStore) {
+  if (!db) {
     $.getJSON('/reservations.json', successCallback);
   }
 };
