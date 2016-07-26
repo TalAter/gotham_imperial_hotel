@@ -105,12 +105,12 @@ $(document).ready(function() {
     if (!arrivalDate || !nights || !guests) {
       return false;
     }
-    addBooking(id, arrivalDate, nights, guests);
+    addReservation(id, arrivalDate, nights, guests);
     return false;
   });
 
   // Periodically check for unconfirmed bookings
-  setInterval(checkUnconfirmedBookings, 5000);
+  setInterval(checkUnconfirmedReservations, 5000);
 });
 
 // Fetches reservations from server and renders them to the page
@@ -118,8 +118,8 @@ var populateReservations = function() {
   getReservations(renderReservations);
 };
 
-// Go over unconfirmed bookings, and verify their status against the server.
-var checkUnconfirmedBookings = function() {
+// Go over unconfirmed reservations, and verify their status against the server.
+var checkUnconfirmedReservations = function() {
   $('.reservation-card--unconfirmed').each(function() {
     $.getJSON('/reservation-details.json', {id: $(this).data('id')}, function(data) {
       updateInObjectStore("reservations", data.id, data);
@@ -128,8 +128,8 @@ var checkUnconfirmedBookings = function() {
   });
 };
 
-// Adds a booking as pending to IndexedDB, the DOM, and the server.
-var addBooking = function(id, arrivalDate, nights, guests) {
+// Adds a reservation as pending to IndexedDB, the DOM, and the server.
+var addReservation = function(id, arrivalDate, nights, guests) {
   var reservationDetails = {
     id:           id,
     arrivalDate:  arrivalDate,
