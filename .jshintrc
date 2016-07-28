@@ -28,6 +28,7 @@
   "globals":  {
     "self":         false,
     "caches":       false,
-    "$":            false
+    "$":            false,
+    "Response":     false
   }
 }
