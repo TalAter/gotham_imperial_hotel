@@ -65,6 +65,12 @@ header {
   color: #fff;
 }
 
+@media (max-height: 600px) {
+  header {
+    min-height: 510px;
+  }
+}
+
 @media (min-width: 992px) {
   header {
     background-image: url('/img/jumbo-background.jpg');
