@@ -378,3 +378,80 @@ div.reservation-card.reservation-card--unconfirmed {
   -o-animation:      throbbing 2000ms 300ms infinite ease-out;
   animation:         throbbing 2000ms 300ms infinite ease-out;
 }
+
+/* Playground page */
+
+div#background-image {
+  background: url('/img/jumbo-background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  opacity: 0.2;
+}
+body.playground-page header {
+  background-image: none;
+  min-height: 400px;
+}
+@media (max-height: 720px) {
+  body.playground-page header {
+    background-image: none;
+    min-height: 100px;
+  }
+}
+body.playground-page h1 {
+  font-size: 40px;
+}
+
+div#instructions-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+div#instructions-container h2 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 300;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.75);
+  padding-left: 5px;
+}
+
+@media (min-width: 726px) {
+  div#instructions-code {
+    float: left;
+    padding-left: 110px;
+  }
+
+  div#instructions-console {
+    float: right;
+  }
+}
+@media (max-width: 726px) {
+  div#instructions-container {
+    text-align: center;
+  }
+  div#instructions-container h2 {
+    width: auto!important;
+  }
+  div#instructions-console img {
+    margin-left: 40px;
+  }
+}
+div#instructions-code img, div#instructions-code h2 {
+  width: 291px;
+}
+
+div#instructions-console img {
+  width: 326px;
+  margin-right: 10px;
+}
+
+div#instructions-console h2 {
+  width: 245px;
+}
