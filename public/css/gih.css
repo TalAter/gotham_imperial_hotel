@@ -422,17 +422,17 @@ div#instructions-container h2 {
   padding-left: 5px;
 }
 
-@media (min-width: 726px) {
+@media (min-width: 692px) {
   div#instructions-code {
     float: left;
-    padding-left: 110px;
+    padding-left: 60px;
   }
 
   div#instructions-console {
     float: right;
   }
 }
-@media (max-width: 726px) {
+@media (max-width: 691px) {
   div#instructions-container {
     text-align: center;
   }
