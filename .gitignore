@@ -2,3 +2,4 @@
 node_modules
 npm-debug.log
 server/db.json
+.DS_Store
