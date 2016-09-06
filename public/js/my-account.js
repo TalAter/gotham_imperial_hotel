@@ -11,7 +11,7 @@ var openDatabase = function() {
   var request = window.indexedDB.open(DB_NAME, DB_VERSION);
 
   request.onerror = function(event) {
-    console.log("Database error: ", event.target.errorCode);
+    console.log("Database error: ", event.target.error);
   };
 
   request.onupgradeneeded = function(event) {
