@@ -5,7 +5,7 @@
   "camelcase" : true,
   "curly"     : true,
   "latedef"   : false,
-  "unused"    : true,
+  "unused"    : false,
   "trailing"  : true,
   "eqeqeq"    : true,
   "eqnull"    : true,
@@ -26,9 +26,12 @@
   "indent"    : 2,
   "esversion" : 6,
   "globals":  {
-    "self":         false,
-    "caches":       false,
-    "$":            false,
-    "Response":     false
+    "self":                 false,
+    "caches":               false,
+    "$":                    false,
+    "Response":             false,
+    "getReservations":      false,
+    "updateInObjectStore":  false,
+    "addToObjectStore":     false
   }
 }
