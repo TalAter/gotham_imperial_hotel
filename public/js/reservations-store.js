@@ -1,4 +1,4 @@
-var DB_VERSION = 1;
+var DB_VERSION = 2;
 var DB_NAME = "gih-reservations";
 
 // Returns a promise which resolves with a database object if it is  opened
@@ -16,10 +16,18 @@ var openDatabase = function() {
 
     request.onupgradeneeded = function(event) {
       var db = event.target.result;
+      var upgradeTransaction = event.target.transaction;
+      var reservationsStore;
       if (!db.objectStoreNames.contains("reservations")) {
-        db.createObjectStore("reservations",
+        reservationsStore = db.createObjectStore("reservations",
           { keyPath: "id" }
         );
+      } else {
+        reservationsStore = upgradeTransaction.objectStore('reservations');
+      }
+
+      if (!reservationsStore.indexNames.contains("idx_status")) {
+        reservationsStore.createIndex("idx_status", "status", { unique: false });
       }
     };
 
