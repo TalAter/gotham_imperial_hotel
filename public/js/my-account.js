@@ -53,7 +53,13 @@ var addReservation = function(id, arrivalDate, nights, guests) {
   };
   addToObjectStore("reservations", reservationDetails);
   renderReservation(reservationDetails);
-  syncReservations();
+  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+    syncReservations();
+  } else {
+    $.getJSON('/make-reservation', reservationDetails, function(data) {
+      updateReservationDisplay(data);
+    });    
+  }
 };
 
 
