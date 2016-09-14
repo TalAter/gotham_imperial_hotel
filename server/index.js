@@ -38,11 +38,8 @@ app.get('/make-reservation', function(req, res) {
   let nights      = req.query['nights'] || req.query['form--nights'];
   let guests      = req.query['guests'] || req.query['form--guests'];
   let reservationStatus = reservations.make(id, arrivalDate, nights, guests);
-  if (req.xhr) {
-    res.json(reservationStatus);
-  } else {
-    res.redirect('/my-account');
-  }
+  console.log('Making a reservation!!!');
+  res.json(reservationStatus);
 });
 
 
