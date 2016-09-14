@@ -82,38 +82,44 @@ var updateInObjectStore = function(storeName, id, object) {
   });
 };
 
-var getReservations = function(successCallback) {
-  openDatabase().then(function(db) {
-    return openObjectStore(db, 'reservations');
-  }).then(function(objectStore) {
-    var reservations = [];
-    objectStore.openCursor().onsuccess = function(event) {
-      var cursor = event.target.result;
-      if (cursor) {
-        reservations.push(cursor.value);
-        cursor.continue();
-      } else {
-        if (reservations.length > 0) {
-          successCallback(reservations);
+var getReservations = function() {
+  return new Promise(function(resolve, reject) {
+    openDatabase().then(function(db) {
+      return openObjectStore(db, 'reservations');
+    }).then(function(objectStore) {
+      var reservations = [];
+      objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          reservations.push(cursor.value);
+          cursor.continue();
         } else {
-          getReservationsFromServer(function(reservations) {
-            openDatabase().then(function(db) {
-              return openObjectStore(db, 'reservations', 'readwrite');
-            }).then(function(objectStore) {
-              for (var i = 0; i < reservations.length; i++) {
-                objectStore.add(reservations[i]);
-              }
-              successCallback(reservations);
+          if (reservations.length > 0) {
+            resolve(reservations);
+          } else {
+            getReservationsFromServer().then(function(reservations) {
+              openDatabase().then(function(db) {
+                return openObjectStore(db, 'reservations', 'readwrite');
+              }).then(function(objectStore) {
+                for (var i = 0; i < reservations.length; i++) {
+                  objectStore.add(reservations[i]);
+                }
+                resolve(reservations);
+              });
             });
-          });
+          }
         }
-      }
-    };
-  }).catch(function(errorMessage) {
-    getReservationsFromServer('/reservations.json', successCallback);
+      };
+    }).catch(function(errorMessage) {
+      getReservationsFromServer().then(function(reservations) {
+        resolve(reservations);
+      });
+    });
   });
 };
 
-var getReservationsFromServer = function(successCallback) {
-  $.getJSON('/reservations.json', successCallback);
+var getReservationsFromServer = function() {
+  return new Promise(function(resolve, reject) {
+    $.getJSON('/reservations.json', resolve);
+  });
 };
