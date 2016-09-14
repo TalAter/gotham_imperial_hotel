@@ -82,13 +82,19 @@ var updateInObjectStore = function(storeName, id, object) {
   });
 };
 
-var getReservations = function() {
+var getReservations = function(indexName, indexValue) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
       return openObjectStore(db, 'reservations');
     }).then(function(objectStore) {
       var reservations = [];
-      objectStore.openCursor().onsuccess = function(event) {
+      var cursor;
+      if (indexName && indexValue) {
+        cursor = objectStore.index(indexName).openCursor(indexValue);
+      } else {
+        cursor = objectStore.openCursor();
+      }
+      cursor.onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
           reservations.push(cursor.value);
