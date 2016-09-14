@@ -35,6 +35,13 @@ var checkUnconfirmedReservations = function() {
   });
 };
 
+// Trigger a background sync event to sync new reservations to the server
+var syncReservations = function() {
+  navigator.serviceWorker.ready.then(function(registration) {
+    registration.sync.register('sync-reservations');
+  });
+};
+
 // Adds a reservation as pending to IndexedDB, the DOM, and the server.
 var addReservation = function(id, arrivalDate, nights, guests) {
   var reservationDetails = {
@@ -42,13 +49,11 @@ var addReservation = function(id, arrivalDate, nights, guests) {
     arrivalDate:  arrivalDate,
     nights:       nights,
     guests:       guests,
-    status:       'Awaiting confirmation'
+    status:       'Sending'
   };
   addToObjectStore("reservations", reservationDetails);
   renderReservation(reservationDetails);
-  $.getJSON('/make-reservation', reservationDetails, function(data) {
-    updateReservationDisplay(data);
-  });
+  syncReservations();
 };
 
 
@@ -123,5 +128,4 @@ var updateReservationDisplay = function(reservation) {
   } else {
     reservationNode.removeClass('reservation-card--unconfirmed');
   }
-
 };

@@ -1,3 +1,5 @@
+importScripts('/js/reservations-store.js');
+
 var CACHE_NAME = 'gih-cache-v6';
 var CACHED_URLS = [
   // Our HTML
@@ -126,4 +128,28 @@ self.addEventListener('activate', function(event) {
       );
     })
   );
+});
+
+var syncReservations = function() {
+  return getReservations('idx_status', 'Sending').then(function(reservations) {
+    return Promise.all(
+      reservations.map(function(reservation) {
+        var makeReservationUrl = new URL('http://localhost:8443/make-reservation');
+        Object.keys(reservation).forEach(function(key) {
+          makeReservationUrl.searchParams.append(key, reservation[key]);
+        });
+        return fetch(makeReservationUrl).then(function(response) {
+          return response.json().then(function(newReservation) {
+            return updateInObjectStore('reservations', newReservation.id, newReservation);
+          });
+        });
+      })
+    );
+  });
+};
+
+self.addEventListener('sync', function(event) {
+  if (event.tag === 'sync-reservations') {
+    event.waitUntil(syncReservations());
+  }
 });
