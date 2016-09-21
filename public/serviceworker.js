@@ -130,15 +130,20 @@ self.addEventListener('activate', function(event) {
   );
 });
 
+var createReservationUrl = function(reservationDetails) {
+  var reservationUrl = new URL('http://localhost:8443/make-reservation');
+  Object.keys(reservationDetails).forEach(function(key) {
+    reservationUrl.searchParams.append(key, reservationDetails[key]);
+  });
+  return reservationUrl;
+};
+
 var syncReservations = function() {
   return getReservations('idx_status', 'Sending').then(function(reservations) {
     return Promise.all(
       reservations.map(function(reservation) {
-        var makeReservationUrl = new URL('http://localhost:8443/make-reservation');
-        Object.keys(reservation).forEach(function(key) {
-          makeReservationUrl.searchParams.append(key, reservation[key]);
-        });
-        return fetch(makeReservationUrl).then(function(response) {
+        var reservationUrl = createReservationUrl(reservation);
+        return fetch(reservationUrl).then(function(response) {
           return response.json().then(function(newReservation) {
             return updateInObjectStore('reservations', newReservation.id, newReservation);
           });
