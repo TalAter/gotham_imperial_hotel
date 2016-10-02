@@ -158,3 +158,18 @@ self.addEventListener('sync', function(event) {
     event.waitUntil(syncReservations());
   }
 });
+
+self.addEventListener('message', function(event) {
+  var data = event.data;
+  if (data.action === 'logout') {
+    self.clients.matchAll().then(function(clients) {
+      clients.forEach(function(client) {
+        if (client.url.includes('/my-account')) {
+          client.postMessage(
+            {action: 'navigate', url: '/'}
+          );
+        }
+      });
+    });
+  }
+});

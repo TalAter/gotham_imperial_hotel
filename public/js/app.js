@@ -4,12 +4,28 @@ if ('serviceWorker' in navigator) {
   }).catch(function(err) {
     console.log('Service Worker registration failed: ', err);
   });
+
+  navigator.serviceWorker.addEventListener('message', function (event) {
+    var data = event.data;
+    if (data.action === 'navigate') {
+      window.location.href = data.url;
+    }
+  });
 }
 
 
 $(document).ready(function() {
   // Fetch and render upcoming events in the hotel
   $.getJSON('/events.json', renderEvents);
+
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    $('#logout-button').click(function(event) {
+        event.preventDefault();
+        navigator.serviceWorker.controller.postMessage(
+          {action: 'logout'}
+        );
+    });
+  }
 });
 
 
