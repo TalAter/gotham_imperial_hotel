@@ -4,7 +4,9 @@ if ('serviceWorker' in navigator) {
   }).catch(function(err) {
     console.log('Service Worker registration failed: ', err);
   });
+}
 
+if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', function (event) {
     var data = event.data;
     if (data.action === 'navigate') {
@@ -12,7 +14,6 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
-
 
 $(document).ready(function() {
   // Fetch and render upcoming events in the hotel
