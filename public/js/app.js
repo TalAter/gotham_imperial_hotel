@@ -18,14 +18,14 @@ $(document).ready(function() {
   // Fetch and render upcoming events in the hotel
   $.getJSON('/events.json', renderEvents);
 
-  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-    $('#logout-button').click(function(event) {
-        event.preventDefault();
-        navigator.serviceWorker.controller.postMessage(
-          {action: 'logout'}
-        );
-    });
-  }
+  $('#logout-button').click(function(event) {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      event.preventDefault();
+      navigator.serviceWorker.controller.postMessage(
+        {action: 'logout'}
+      );
+    }
+  });
 });
 
 
