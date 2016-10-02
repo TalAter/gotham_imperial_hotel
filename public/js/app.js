@@ -34,8 +34,8 @@ $(document).ready(function() {
 
 /* ************************************************************ */
 /* The code below this point is used to render to the DOM. It   */
-/* completely ignores common sense principles like separation   */
-/* of concerns as a trade off for readability.                  */
+/* completely ignores common sense principles as a trade off    */
+/* for readability.                                             */
 /* You can ignore it, or you can send angry tweets about it to  */
 /* @TalAter                                                     */
 /* ************************************************************ */
