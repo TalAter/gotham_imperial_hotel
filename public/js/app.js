@@ -11,6 +11,8 @@ if ('serviceWorker' in navigator) {
     var data = event.data;
     if (data.action === 'navigate') {
       window.location.href = data.url;
+    } else if (data.action === 'update-reservation') {
+      updateReservationDisplay(data.reservation);
     }
   });
 }

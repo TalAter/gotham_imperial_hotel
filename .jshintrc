@@ -26,13 +26,14 @@
   "indent"    : 2,
   "esversion" : 6,
   "globals":  {
-    "self":                 false,
-    "caches":               false,
-    "$":                    false,
-    "Response":             false,
-    "importScripts":        false,
-    "getReservations":      false,
-    "updateInObjectStore":  false,
-    "addToObjectStore":     false
+    "self":                     false,
+    "caches":                   false,
+    "$":                        false,
+    "Response":                 false,
+    "importScripts":            false,
+    "getReservations":          false,
+    "updateInObjectStore":      false,
+    "updateReservationDisplay": false,
+    "addToObjectStore":         false
   }
 }
