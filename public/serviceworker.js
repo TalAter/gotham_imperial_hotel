@@ -144,9 +144,13 @@ var syncReservations = function() {
       reservations.map(function(reservation) {
         var reservationUrl = createReservationUrl(reservation);
         return fetch(reservationUrl).then(function(response) {
-          return response.json().then(function(newReservation) {
-            return updateInObjectStore('reservations', newReservation.id, newReservation);
-          });
+          return response.json();
+        }).then(function(newReservation) {
+          return updateInObjectStore(
+            'reservations',
+            newReservation.id,
+            newReservation
+          );
         });
       })
     );
