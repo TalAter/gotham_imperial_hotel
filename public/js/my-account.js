@@ -35,6 +35,30 @@ var checkUnconfirmedReservations = function() {
   });
 };
 
+var showNotification = function() {
+  var notification = new Notification("Reservation made", {
+    body: 'Reservation for Gotham Imperial Hotel confirmed',
+    icon: '/img/reservation-gih.jpg',
+    tag: 'reservation-status'
+  });
+};
+
+var offerNotification = function() {
+  if ("Notification" in window &&
+      "PushManager" in window &&
+      "serviceWorker" in navigator) {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then(function(permission){
+        if (permission === "granted") {
+          showNotification();
+        }
+      });
+    } else {
+      showNotification();
+    }
+  }
+};
+
 // Adds a reservation as pending to IndexedDB, the DOM, and the server.
 var addReservation = function(id, arrivalDate, nights, guests) {
   var reservationDetails = {
