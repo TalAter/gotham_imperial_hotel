@@ -16,6 +16,15 @@ $(document).ready(function() {
     return false;
   });
 
+  $('#offer-notification').click(function() {
+    $('#offer-notification').addClass('modal--hide');
+    Notification.requestPermission().then(function(permission){
+      if (permission === "granted") {
+        showNotification();
+      }
+    });
+  });
+
   // Periodically check for unconfirmed bookings
   setInterval(checkUnconfirmedReservations, 5000);
 });
@@ -48,11 +57,7 @@ var offerNotification = function() {
       "PushManager" in window &&
       "serviceWorker" in navigator) {
     if (Notification.permission !== "granted") {
-      Notification.requestPermission().then(function(permission){
-        if (permission === "granted") {
-          showNotification();
-        }
-      });
+      $('#offer-notification').removeClass('modal--hide');
     } else {
       showNotification();
     }
@@ -79,6 +84,7 @@ var addReservation = function(id, arrivalDate, nights, guests) {
       updateReservationDisplay(data);
     });
   }
+  offerNotification();
 };
 
 

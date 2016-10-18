@@ -379,6 +379,44 @@ div.reservation-card.reservation-card--unconfirmed {
   animation:         throbbing 2000ms 300ms infinite ease-out;
 }
 
+.bottom-modal {
+  position: fixed;
+  width: 100%;
+  background-color: #333;
+  border-top: 2px solid #a3915e;
+  z-index: 1005;
+  padding: 15px 5px;
+  bottom: -1px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition:    all 0.3s ease-in-out;
+  -o-transition:      all 0.3s ease-in-out;
+  -ms-transition:     all 0.3s ease-in-out;
+  transition:         all 0.3s ease-in-out;
+}
+
+.bottom-modal.modal--hide {
+  -webkit-transform:  translate(0, 200px);
+	-moz-transform:     translate(0, 200px);
+	-o-transform:       translate(0, 200px);
+	-ms-transform:      translate(0, 200px);
+  transform:          translate(0, 200px);
+}
+
+#offer-notification {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 900;
+}
+#offer-notification:hover {
+  color: #fff;
+}
+
+#offer-notification img {
+  width: 36px;
+  margin-right: 10px;
+  vertical-align: bottom!important;
+}
+
 /* Playground page */
 
 div#background-image {
