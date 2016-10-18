@@ -385,7 +385,7 @@ div.reservation-card.reservation-card--unconfirmed {
   background-color: #333;
   border-top: 2px solid #a3915e;
   z-index: 1005;
-  padding: 15px 5px;
+  padding: 20px 5px;
   bottom: -1px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition:    all 0.3s ease-in-out;
@@ -407,8 +407,12 @@ div.reservation-card.reservation-card--unconfirmed {
   font-size: 17px;
   font-weight: 900;
 }
-#offer-notification:hover {
-  color: #fff;
+#offer-notification a {
+  color: #a3915e;
+}
+#offer-notification a:hover {
+  color: #c7bc9e;
+  text-decoration: none;
 }
 
 #offer-notification img {

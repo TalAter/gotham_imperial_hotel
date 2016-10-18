@@ -16,7 +16,8 @@ $(document).ready(function() {
     return false;
   });
 
-  $('#offer-notification').click(function() {
+  $('#offer-notification a').click(function(event) {
+    event.preventDefault();
     $('#offer-notification').addClass('modal--hide');
     Notification.requestPermission().then(function(permission){
       if (permission === "granted") {
