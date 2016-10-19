@@ -4,7 +4,6 @@ var subscriptions = require('./subscriptions.js');
 var events = require('./events.js');
 var app = express();
 var port = 8443;
-var moment = require('moment');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -23,12 +22,6 @@ app.get('/reservations.json', function(req, res) {
 
 app.get('/reservation-details.json', function(req, res) {
   let reservation = reservations.getById(req.query['id']);
-  if (reservation && reservation.bookedOn) {
-    // reservations are automatically confirmed 3 seconds after booking time
-    if (moment().diff(moment(reservation.bookedOn), 'seconds') >= 3) {
-      reservation.status = 'Confirmed';
-    }
-  }
   res.json(reservations.formatResponseObject(reservation));
 });
 
@@ -43,6 +36,12 @@ app.get('/make-reservation', function(req, res) {
   let guests      = req.query['guests'] || req.query['form--guests'];
   let reservationStatus = reservations.make(id, arrivalDate, nights, guests);
   console.log('Making a reservation!!!');
+
+  // reservations are automatically confirmed 3 seconds after booking time
+  setTimeout(function() {
+    reservations.confirm(id);
+  }, 3000);
+
   res.json(reservationStatus);
 });
 

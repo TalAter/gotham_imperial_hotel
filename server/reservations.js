@@ -43,9 +43,15 @@ var make = function(id, arrivalDate, nights, guests) {
   return formatResponseObject(reservation);
 };
 
+var confirm = function(id) {
+  var reservation = getById(id);
+  reservation.status = 'Confirmed';
+};
+
 module.exports = {
   get: get,
   getById: getById,
   make: make,
-  formatResponseObject: formatResponseObject
+  formatResponseObject: formatResponseObject,
+  confirm: confirm
 };
