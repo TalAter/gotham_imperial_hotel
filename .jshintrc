@@ -30,6 +30,7 @@
     "caches":                   false,
     "$":                        false,
     "Response":                 false,
+    "Headers":                  false,
     "importScripts":            false,
     "getReservations":          false,
     "updateInObjectStore":      false,
