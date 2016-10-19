@@ -18,12 +18,8 @@ $(document).ready(function() {
 
   $('#offer-notification a').click(function(event) {
     event.preventDefault();
-    $('#offer-notification').addClass('modal--hide');
-    Notification.requestPermission().then(function(permission){
-      if (permission === "granted") {
-        showNotification();
-      }
-    });
+    hideNotificationOffer();
+    subscribeUserToNotifications();
   });
 
   // Periodically check for unconfirmed bookings
@@ -45,11 +41,45 @@ var checkUnconfirmedReservations = function() {
   });
 };
 
-var showNotification = function() {
-  var notification = new Notification("Reservation made", {
-    body: 'Reservation for Gotham Imperial Hotel confirmed',
+var urlBase64ToUint8Array = function(base64String) {
+  var padding = '='.repeat((4 - base64String.length % 4) % 4);
+  var base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+  var rawData = window.atob(base64);
+  var outputArray = new Uint8Array(rawData.length);
+  for (var i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+};
+
+var sendNotification = function() {
+  var notification = new Notification("Resevation Received", {
+    body:
+    'Thank you for making a reservation with Gotham Imperial Hotel.\n'+
+    'You will receive a notification if there are any changes to your reservation.',
     icon: '/img/reservation-gih.jpg',
-    tag: 'reservation-status'
+    tag: 'notification-enabled'
+  });
+};
+
+var subscribeUserToNotifications = function() {
+  Notification.requestPermission().then(function(permission){
+    if (permission === "granted") {
+      sendNotification();
+      var subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          'BBvTTfVBuJqe_cMTHqLSCF1oIeXtu6tRES9Hodtrtp5-8IFSyTDFKptyheDaYQwtX2t0QFe7E488oWSczl85fkw'
+        )
+      };
+      navigator.serviceWorker.ready.then(function(registration) {
+        return registration.pushManager.subscribe(subscribeOptions);
+      }).then(function(subscription) {
+        console.log(subscription);
+      });
+    }
   });
 };
 
@@ -58,9 +88,9 @@ var offerNotification = function() {
       "PushManager" in window &&
       "serviceWorker" in navigator) {
     if (Notification.permission !== "granted") {
-      $('#offer-notification').removeClass('modal--hide');
+      showNotificationOffer();
     } else {
-      showNotification();
+      sendNotification();
     }
   }
 };
@@ -160,4 +190,12 @@ var updateReservationDisplay = function(reservation) {
   } else {
     reservationNode.removeClass('reservation-card--unconfirmed');
   }
+};
+
+var showNotificationOffer = function() {
+  $('#offer-notification').removeClass('modal--hide');
+};
+
+var hideNotificationOffer = function() {
+  $('#offer-notification').addClass('modal--hide');
 };
