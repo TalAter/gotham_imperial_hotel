@@ -18,7 +18,7 @@ var notify = function(pushPayload) {
 
   var subscriptions = db.get('subscriptions').value();
   subscriptions.forEach(function(subscription) {
-    webpush.sendNotification(subscription, pushPayload).then(function() {
+    webpush.sendNotification(subscription, JSON.stringify(pushPayload)).then(function() {
       console.log('Notification sent');
     }).catch(function() {
       console.log('Notification failed');

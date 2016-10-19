@@ -48,7 +48,12 @@ app.get('/make-reservation', function(req, res) {
 
 app.post('/add-subscription', function(req, res) {
   subscriptions.add(req.body);
-  subscriptions.notify('Pushing!!!');
+  subscriptions.notify({
+    title: 'Title!',
+    body: 'This is the body',
+    icon: '/img/reservation-gih.jpg',
+    id: 1
+  });
   res.json();
 });
 
