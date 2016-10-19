@@ -1,4 +1,5 @@
 var db = require('./db.js');
+var subscriptions = require('./subscriptions.js');
 var moment = require('moment');
 var _ = require('lodash');
 
@@ -46,6 +47,14 @@ var make = function(id, arrivalDate, nights, guests) {
 var confirm = function(id) {
   var reservation = getById(id);
   reservation.status = 'Confirmed';
+
+  subscriptions.notify({
+    title: 'Reservation Confirmed',
+    body: 'Your Gotham Imperial Hotel reservation for '+reservation.arrivalDate+
+      ', has been confirmed',
+    icon: '/img/reservation-gih.jpg',
+    id: id
+  });
 };
 
 module.exports = {
