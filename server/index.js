@@ -1,9 +1,13 @@
 var express = require('express');
 var reservations = require('./reservations.js');
+var subscriptions = require('./subscriptions.js');
 var events = require('./events.js');
 var app = express();
 var port = 8443;
 var moment = require('moment');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 
 // Define routes
@@ -40,6 +44,12 @@ app.get('/make-reservation', function(req, res) {
   let reservationStatus = reservations.make(id, arrivalDate, nights, guests);
   console.log('Making a reservation!!!');
   res.json(reservationStatus);
+});
+
+app.post('/add-subscription', function(req, res) {
+  subscriptions.add(req.body);
+  subscriptions.notify('Pushing!!!');
+  res.json();
 });
 
 

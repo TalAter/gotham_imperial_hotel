@@ -71,13 +71,20 @@ var subscribeUserToNotifications = function() {
       var subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
-          'BBvTTfVBuJqe_cMTHqLSCF1oIeXtu6tRES9Hodtrtp5-8IFSyTDFKptyheDaYQwtX2t0QFe7E488oWSczl85fkw'
+          'BKQnRd5V_u942j95_etSdNS6EkYse_HcG-KEbPm_KfvkrGGN_c45G_POcmP8yC_f90SB37ybDoUEcru6Xbr7pTY'
         )
       };
       navigator.serviceWorker.ready.then(function(registration) {
         return registration.pushManager.subscribe(subscribeOptions);
       }).then(function(subscription) {
-        console.log(subscription);
+        var fetchOptions = {
+          method: 'post',
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          }),
+          body: JSON.stringify(subscription)
+        };
+        return fetch('/add-subscription', fetchOptions);
       });
     }
   });
