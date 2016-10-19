@@ -191,3 +191,32 @@ self.addEventListener('message', function(event) {
     });
   }
 });
+
+self.addEventListener('push', function(event) {
+  var data = event.data.json();
+  self.registration.showNotification(data.title, {
+    body: data.body,
+    icon: data.icon,
+    tag: 'push-notification-'+data.id,
+    actions: data.actions
+  });
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  if (event.action === 'details') {
+    event.waitUntil(
+      self.clients.matchAll({
+        includeUncontrolled: true,
+        type: 'window'
+      }).then(function(activeClients) {
+        if (activeClients.length > 0) {
+          activeClients[0].navigate('http://localhost:8443/my-account');
+          activeClients[0].focus();
+        } else {
+          self.clients.openWindow('http://localhost:8443/my-account');
+        }
+      })
+    );
+  }
+});
