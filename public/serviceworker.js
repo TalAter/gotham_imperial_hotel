@@ -194,12 +194,19 @@ self.addEventListener('message', function(event) {
 
 self.addEventListener('push', function(event) {
   var data = event.data.json();
-  self.registration.showNotification(data.title, {
-    body: data.body,
-    icon: data.icon,
-    tag: 'push-notification-'+data.id,
-    actions: data.actions
-  });
+  if (data.type === 'reservation-confirmation') {
+    var reservation = JSON.parse(data.reservation);
+    self.registration.showNotification('Reservation Confirmed', {
+      body: 'Your Gotham Imperial Hotel reservation for '+reservation.arrivalDate+
+        ', has been confirmed',
+      icon: '/img/reservation-gih.jpg',
+      tag: 'reservation-confirmation-'+reservation.id,
+      actions: [
+         {action: 'confirm', title: 'Great! See you then', icon: 'img/icon-confirm.png'},
+         {action: 'details', title: 'Show my reservations', icon: 'img/icon-calendar.png'}
+       ]
+    });
+  }
 });
 
 self.addEventListener('notificationclick', function(event) {

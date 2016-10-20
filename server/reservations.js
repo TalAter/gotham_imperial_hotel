@@ -49,15 +49,8 @@ var confirm = function(id) {
   reservation.status = 'Confirmed';
 
   subscriptions.notify({
-    title: 'Reservation Confirmed',
-    body: 'Your Gotham Imperial Hotel reservation for '+reservation.arrivalDate+
-      ', has been confirmed',
-    icon: '/img/reservation-gih.jpg',
-    id: id,
-    actions: [
-       {action: 'confirm', title: 'Great! See you then', icon: 'img/icon-confirm.png'},
-       {action: 'details', title: 'Show my reservations', icon: 'img/icon-calendar.png'}
-     ]
+    type: 'reservation-confirmation',
+    reservation: JSON.stringify(reservation)
   });
 };
 
