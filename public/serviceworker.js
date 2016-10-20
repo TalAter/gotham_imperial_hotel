@@ -196,6 +196,10 @@ self.addEventListener('push', function(event) {
   var data = event.data.json();
   if (data.type === 'reservation-confirmation') {
     var reservation = JSON.parse(data.reservation);
+    updateInObjectStore(
+      'reservations',
+      reservation.id,
+      reservation);
     self.registration.showNotification('Reservation Confirmed', {
       body: 'Your Gotham Imperial Hotel reservation for '+reservation.arrivalDate+
         ', has been confirmed',
