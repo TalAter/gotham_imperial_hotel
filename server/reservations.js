@@ -29,7 +29,7 @@ var make = function(id, arrivalDate, nights, guests) {
   }
   let reservation = {
     "id":           id.toString(),
-    "arrivalDate":  moment(arrivalDate).format('MMMM Do YYYY'),
+    "arrivalDate":  moment(new Date(arrivalDate)).format('MMMM Do YYYY'),
     "nights":       nights,
     "guests":       guests,
     "status":       'Awaiting confirmation',
