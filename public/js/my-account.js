@@ -54,9 +54,22 @@ var urlBase64ToUint8Array = function(base64String) {
   return outputArray;
 };
 
+var sendNotification = function() {
+  navigator.serviceWorker.ready.then(function(registration) {
+    registration.showNotification("Resevation Received", {
+      body:
+      'Thank you for making a reservation with Gotham Imperial Hotel.\n'+
+      'You will receive a notification if there are any changes to your reservation.',
+      icon: '/img/reservation-gih.jpg',
+      tag: 'notification-enabled'
+    });
+  });
+};
+
 var subscribeUserToNotifications = function() {
   Notification.requestPermission().then(function(permission){
     if (permission === "granted") {
+      sendNotification();
       var subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
