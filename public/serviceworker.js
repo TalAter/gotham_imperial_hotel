@@ -205,9 +205,9 @@ self.addEventListener('push', function(event) {
       icon: '/img/reservation-gih.jpg',
       tag: 'reservation-confirmation-'+reservation.id,
       actions: [
-         {action: 'confirm', title: 'OK', icon: 'img/icon-confirm.png'},
-         {action: 'details', title: 'Show my reservations', icon: 'img/icon-cal.png'}
-       ]
+        {action: 'details', title: 'Show reservations', icon: 'img/icon-cal.png'},
+        {action: 'confirm', title: 'OK', icon: 'img/icon-confirm.png'},
+      ]
     });
   }
 });
