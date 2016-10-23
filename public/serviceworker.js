@@ -222,7 +222,6 @@ self.addEventListener('notificationclick', function(event) {
       }).then(function(activeClients) {
         if (activeClients.length > 0) {
           activeClients[0].navigate('http://localhost:8443/my-account');
-          activeClients[0].focus();
         } else {
           self.clients.openWindow('http://localhost:8443/my-account');
         }
