@@ -203,11 +203,13 @@ self.addEventListener('push', function(event) {
     self.registration.showNotification('Reservation Confirmed', {
       body: 'Your reservation for '+reservation.arrivalDate+' has been confirmed.',
       icon: '/img/reservation-gih.jpg',
+      badge: '/img/icon-hotel.png',
       tag: 'reservation-confirmation-'+reservation.id,
       actions: [
-        {action: 'details', title: 'Show reservations', icon: 'img/icon-cal.png'},
-        {action: 'confirm', title: 'OK', icon: 'img/icon-confirm.png'},
-      ]
+        {action: 'details', title: 'Show reservations', icon: '/img/icon-cal.png'},
+        {action: 'confirm', title: 'OK', icon: '/img/icon-confirm.png'},
+      ],
+      vibrate: [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500]
     });
   }
 });
