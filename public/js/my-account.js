@@ -56,7 +56,7 @@ var urlBase64ToUint8Array = function(base64String) {
 
 var sendNotification = function() {
   navigator.serviceWorker.ready.then(function(registration) {
-    registration.showNotification("Resevation Received", {
+    registration.showNotification("Reservation Received", {
       body:
       'Thank you for making a reservation with Gotham Imperial Hotel.\n'+
       'You will receive a notification if there are any changes to your reservation.',
