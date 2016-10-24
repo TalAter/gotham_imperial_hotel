@@ -61,7 +61,7 @@ var sendNotification = function() {
       'Thank you for making a reservation with Gotham Imperial Hotel.\n'+
       'You will receive a notification if there are any changes to your reservation.',
       icon: '/img/reservation-gih.jpg',
-      tag: 'notification-enabled'
+      tag: 'new-reservation'
     });
   });
 };
