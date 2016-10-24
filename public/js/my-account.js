@@ -54,7 +54,7 @@ var urlBase64ToUint8Array = function(base64String) {
   return outputArray;
 };
 
-var sendNotification = function() {
+var showNewReservationNotification = function() {
   navigator.serviceWorker.ready.then(function(registration) {
     registration.showNotification("Reservation Received", {
       body:
@@ -69,7 +69,7 @@ var sendNotification = function() {
 var subscribeUserToNotifications = function() {
   Notification.requestPermission().then(function(permission){
     if (permission === "granted") {
-      sendNotification();
+      showNewReservationNotification();
       var subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
@@ -99,7 +99,7 @@ var offerNotification = function() {
     if (Notification.permission !== "granted") {
       showNotificationOffer();
     } else {
-      sendNotification();
+      showNewReservationNotification();
     }
   }
 };
