@@ -59,7 +59,7 @@ var sendNotification = function() {
     registration.showNotification("Reservation Received", {
       body:
       'Thank you for making a reservation with Gotham Imperial Hotel.\n'+
-      'You will receive a notification if there are any changes to your reservation.',
+      'You will receive a notification if there are any changes to the reservation.',
       icon: '/img/reservation-gih.jpg',
       tag: 'new-reservation'
     });
