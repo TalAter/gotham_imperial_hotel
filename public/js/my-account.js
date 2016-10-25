@@ -72,6 +72,7 @@ var subscribeUserToNotifications = function() {
     if (permission === "granted") {
       showNewReservationNotification();
       var subscribeOptions = {
+        userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
           'BKQnRd5V_u942j95_etSdNS6EkYse_HcG-KEbPm_KfvkrGGN_c45G_POcmP8yC_f90SB37ybDoUEcru6Xbr7pTY'
         )
