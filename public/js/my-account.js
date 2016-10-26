@@ -41,19 +41,6 @@ var checkUnconfirmedReservations = function() {
   });
 };
 
-var showNewReservationNotification = function() {
-  navigator.serviceWorker.ready.then(function(registration) {
-    registration.showNotification("Reservation Received", {
-      body:
-      'Thank you for making a reservation with Gotham Imperial Hotel.\n'+
-      'You will receive a notification if there are any changes to the reservation.',
-      icon: '/img/reservation-gih.jpg',
-      badge: '/img/icon-hotel.png',
-      tag: 'new-reservation'
-    });
-  });
-};
-
 var urlBase64ToUint8Array = function(base64String) {
   var padding = '='.repeat((4 - base64String.length % 4) % 4);
   var base64 = (base64String + padding)
@@ -70,7 +57,6 @@ var urlBase64ToUint8Array = function(base64String) {
 var subscribeUserToNotifications = function() {
   Notification.requestPermission().then(function(permission){
     if (permission === "granted") {
-      showNewReservationNotification();
       var subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
@@ -99,8 +85,6 @@ var offerNotification = function() {
       "serviceWorker" in navigator) {
     if (Notification.permission !== "granted") {
       showNotificationOffer();
-    } else {
-      showNewReservationNotification();
     }
   }
 };
