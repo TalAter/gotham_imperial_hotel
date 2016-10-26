@@ -3,6 +3,14 @@ var webpush = require('web-push');
 var vapidDetails = require('./vapid-details.js');
 
 var add = function(subscription) {
+  var existingSubscriptions = db.get('subscriptions')
+  .filter({endpoint: subscription.endpoint})
+  .value();
+
+  if (existingSubscriptions.length > 0) {
+    return;
+  }
+
   db.get('subscriptions')
     .push(subscription)
     .value();
