@@ -4,9 +4,9 @@ var _ = require('lodash');
 var reservations = [];
 var date = moment();
 
-for (let i = 0; i < 2; i++) {
+for (var i = 0; i < 2; i++) {
   date.add(_.random(5,30), 'days');
-  let reservation = {
+  var reservation = {
     "id":         _.random(80000000,81000000).toString(),
     "arrivalDate":   date.format('MMMM Do YYYY'),
     "nights":     _.random(1,4),

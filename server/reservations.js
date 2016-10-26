@@ -23,7 +23,7 @@ var formatResponseObject = function(reservation) {
  * @returns {Array}
  */
 var get = function() {
-  let reservations = db.get('reservations').value();
+  var reservations = db.get('reservations').value();
   return reservations.map(formatResponseObject);
 };
 
@@ -53,7 +53,7 @@ var make = function(id, arrivalDate, nights, guests) {
   if (guests > 5 || !arrivalDate || !nights || !guests) {
     return false;
   }
-  let reservation = {
+  var reservation = {
     "id":           id.toString(),
     "arrivalDate":  moment(new Date(arrivalDate)).format('MMMM Do YYYY'),
     "nights":       nights,

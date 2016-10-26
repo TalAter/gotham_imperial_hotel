@@ -21,7 +21,7 @@ app.get('/reservations.json', function(req, res) {
 });
 
 app.get('/reservation-details.json', function(req, res) {
-  let reservation = reservations.getById(req.query['id']);
+  var reservation = reservations.getById(req.query['id']);
   res.json(reservations.formatResponseObject(reservation));
 });
 
@@ -30,11 +30,11 @@ app.get('/events.json', function(req, res) {
 });
 
 app.get('/make-reservation', function(req, res) {
-  let id          = req.query['id'] || Date.now().toString().substring(3,11);
-  let arrivalDate = req.query['arrivalDate'] || req.query['form--arrival-date'];
-  let nights      = req.query['nights'] || req.query['form--nights'];
-  let guests      = req.query['guests'] || req.query['form--guests'];
-  let reservationStatus = reservations.make(id, arrivalDate, nights, guests);
+  var id          = req.query['id'] || Date.now().toString().substring(3,11);
+  var arrivalDate = req.query['arrivalDate'] || req.query['form--arrival-date'];
+  var nights      = req.query['nights'] || req.query['form--nights'];
+  var guests      = req.query['guests'] || req.query['form--guests'];
+  var reservationStatus = reservations.make(id, arrivalDate, nights, guests);
   console.log('Making a reservation!!!');
 
   // reservations are automatically confirmed 3 seconds after booking time

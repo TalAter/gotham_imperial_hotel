@@ -34,9 +34,9 @@ const eventFixtures = [
 var events = [];
 
 // Create the events array
-for (let event of eventFixtures) {
+for (var event of eventFixtures) {
   // Make up some dates for the events
-  let date;
+  var date;
   if (event.date) {
     // If certain events have specific date requirements (e.g. new year's eve, Halloween)
     // use that date and add the year
