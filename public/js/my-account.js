@@ -41,19 +41,6 @@ var checkUnconfirmedReservations = function() {
   });
 };
 
-var urlBase64ToUint8Array = function(base64String) {
-  var padding = '='.repeat((4 - base64String.length % 4) % 4);
-  var base64 = (base64String + padding)
-    .replace(/\-/g, '+')
-    .replace(/_/g, '/');
-  var rawData = window.atob(base64);
-  var outputArray = new Uint8Array(rawData.length);
-  for (var i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
-
 var showNewReservationNotification = function() {
   navigator.serviceWorker.ready.then(function(registration) {
     registration.showNotification("Reservation Received", {
@@ -65,6 +52,19 @@ var showNewReservationNotification = function() {
       tag: 'new-reservation'
     });
   });
+};
+
+var urlBase64ToUint8Array = function(base64String) {
+  var padding = '='.repeat((4 - base64String.length % 4) % 4);
+  var base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+  var rawData = window.atob(base64);
+  var outputArray = new Uint8Array(rawData.length);
+  for (var i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
 };
 
 var subscribeUserToNotifications = function() {
