@@ -85,6 +85,8 @@ var offerNotification = function() {
       "serviceWorker" in navigator) {
     if (Notification.permission !== "granted") {
       showNotificationOffer();
+    } else {
+      subscribeUserToNotifications();
     }
   }
 };
