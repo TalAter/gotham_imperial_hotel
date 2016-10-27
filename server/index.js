@@ -37,7 +37,7 @@ app.get('/make-reservation', function(req, res) {
   var reservationStatus = reservations.make(id, arrivalDate, nights, guests);
   console.log('Making a reservation!!!');
 
-  // reservations are automatically confirmed 3 seconds after booking time
+  // reservations are automatically confirmed 5 seconds after booking time
   setTimeout(function() {
     reservations.confirm(id);
   }, 5000);
