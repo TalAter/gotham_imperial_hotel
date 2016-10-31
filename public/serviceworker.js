@@ -195,7 +195,7 @@ self.addEventListener('message', function(event) {
 self.addEventListener('push', function(event) {
   var data = event.data.json();
   if (data.type === 'reservation-confirmation') {
-    var reservation = JSON.parse(data.reservation);
+    var reservation = data.reservation;
     updateInObjectStore(
       'reservations',
       reservation.id,

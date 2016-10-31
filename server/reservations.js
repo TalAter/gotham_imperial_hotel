@@ -81,7 +81,7 @@ var confirm = function(id) {
 
   subscriptions.notify({
     type: 'reservation-confirmation',
-    reservation: JSON.stringify(reservation)
+    reservation: reservation
   });
 };
 
