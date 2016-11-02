@@ -1,6 +1,6 @@
 var db = require('./db.js');
 var webpush = require('web-push');
-var vapidDetails = require('./vapid-details.js');
+var pushKeys = require('./push-keys.js');
 
 /**
  * Adds a subscription details object to the database, if it doesn't already exist
@@ -28,11 +28,11 @@ var add = function(subscription) {
  * @param {Object} pushPayload
  */
 var notify = function(pushPayload) {
-  webpush.setGCMAPIKey(vapidDetails.GCMAPIKey);
+  webpush.setGCMAPIKey(pushKeys.GCMAPIKey);
   webpush.setVapidDetails(
-    vapidDetails.subject,
-    vapidDetails.publicKey,
-    vapidDetails.privateKey
+    pushKeys.subject,
+    pushKeys.publicKey,
+    pushKeys.privateKey
   );
 
   var subscriptions = db.get('subscriptions').value();

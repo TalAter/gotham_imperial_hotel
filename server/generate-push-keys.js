@@ -7,20 +7,20 @@ console.log(vapidKeys.publicKey);
 console.log('This key should be used as the applicationServerKey when creating a subscription');
 console.log();
 
-var vapidDetailsContents = `module.exports = {
+var pushKeysContents = `module.exports = {
   GCMAPIKey: 'YOUR_GCM_API_KEY',
   subject: 'mailto:your@email.com',
   publicKey: '${vapidKeys.publicKey}',
   privateKey: '${vapidKeys.privateKey}'
 };`;
 
-var vapidDetailsFilePath = __dirname+'/vapid-details.js';
+var pushKeysFilePath = __dirname+'/push-keys.js';
 
-fs.writeFile(vapidDetailsFilePath, vapidDetailsContents, function(err) {
+fs.writeFile(pushKeysFilePath, pushKeysContents, function(err) {
   if (err) {
-    console.log('Error creating vapid-details.js');
+    console.log('Error creating push-keys.js');
     console.log(err);
   }
-  console.log(vapidDetailsFilePath+' created.');
+  console.log(pushKeysFilePath+' created.');
   console.log('You should update it with your GCM API key, and email');
 });
