@@ -1,4 +1,5 @@
 importScripts('/js/reservations-store.js');
+importScripts('/js/vendor/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js');
 
 var CACHE_NAME = 'gih-cache-v6';
 var CACHED_URLS = [
@@ -9,12 +10,14 @@ var CACHED_URLS = [
   '/css/gih.css',
   'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
   'https://fonts.googleapis.com/css?family=Lato:300,600,900',
+  '/js/vendor/progressive-ui-kitt/themes/flat.css',
   // JavaScript
   'https://code.jquery.com/jquery-3.0.0.min.js',
   '/js/app.js',
   '/js/offline-map.js',
   '/js/my-account.js',
   '/js/reservations-store.js',
+  '/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js',
   // Images
   '/img/logo.png',
   '/img/logo-header.png',
@@ -80,6 +83,9 @@ self.addEventListener('fetch', function(event) {
           cache.put(event.request, networkResponse.clone());
           return networkResponse;
         }).catch(function() {
+          ProgressiveKITT.addAlert(
+            'You are currently offline. The content of this page may be out of date.'
+          );
           return caches.match(event.request);
         });
       })

@@ -35,6 +35,7 @@
     "getReservations":          false,
     "updateInObjectStore":      false,
     "updateReservationDisplay": false,
-    "addToObjectStore":         false
+    "addToObjectStore":         false,
+    "ProgressiveKITT":          false
   }
 }
