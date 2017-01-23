@@ -1,5 +1,5 @@
-var moment = require('moment');
-var _ = require('lodash');
+var moment = require("moment");
+var _ = require("lodash");
 
 const eventFixtures = [
   {
@@ -40,13 +40,13 @@ for (var event of eventFixtures) {
   if (event.date) {
     // If certain events have specific date requirements (e.g. new year's eve, Halloween)
     // use that date and add the year
-    date = moment(moment().format('YYYY/')+'/'+event.date, "YYYY/MM/DD");
+    date = moment(moment().format("YYYY/") + "/" + event.date, "YYYY/MM/DD");
   } else {
     // Else randomize a date within the next 30 days
-    date = moment().add(_.random(0,30), 'days');
+    date = moment().add(_.random(0, 30), "days");
   }
 
-  event.date = date.format('MMMM Do YYYY');
+  event.date = date.format("MMMM Do YYYY");
   events.push(event);
 }
 
