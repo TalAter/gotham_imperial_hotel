@@ -34,7 +34,7 @@ var get = function() {
  * @returns {Object|undefined}
  */
 var getById = function(id) {
-  var reservation = db.get('reservations')
+  var reservation = db.get("reservations")
     .filter({id: id})
     .value();
   return reservation[0] || undefined;
