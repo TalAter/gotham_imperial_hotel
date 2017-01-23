@@ -1,7 +1,7 @@
-var db = require('./db.js');
-var subscriptions = require('./subscriptions.js');
-var moment = require('moment');
-var _ = require('lodash');
+var db = require("./db.js");
+var subscriptions = require("./subscriptions.js");
+var moment = require("moment");
+var _ = require("lodash");
 
 /**
  * Formats a given reservation object for display
@@ -12,7 +12,7 @@ var _ = require('lodash');
 var formatResponseObject = function(reservation) {
   if (reservation) {
     reservation = _.clone(reservation);
-    reservation.bookedOn = moment(reservation.bookedOn).format('MMMM Do YYYY');
+    reservation.bookedOn = moment(reservation.bookedOn).format("MMMM Do YYYY");
   }
   return reservation;
 };
@@ -23,7 +23,7 @@ var formatResponseObject = function(reservation) {
  * @returns {Array}
  */
 var get = function() {
-  var reservations = db.get('reservations').value();
+  var reservations = db.get("reservations").value();
   return reservations.map(formatResponseObject);
 };
 
@@ -35,8 +35,8 @@ var get = function() {
  */
 var getById = function(id) {
   var reservation = db.get('reservations')
-  .filter({id: id})
-  .value();
+    .filter({id: id})
+    .value();
   return reservation[0] || undefined;
 };
 
@@ -55,15 +55,15 @@ var make = function(id, arrivalDate, nights, guests) {
   }
   var reservation = {
     "id":           id.toString(),
-    "arrivalDate":  moment(new Date(arrivalDate)).format('MMMM Do YYYY'),
+    "arrivalDate":  moment(new Date(arrivalDate)).format("MMMM Do YYYY"),
     "nights":       nights,
     "guests":       guests,
-    "status":       'Awaiting confirmation',
+    "status":       "Awaiting confirmation",
     "bookedOn":     moment().format(),
-    "price":        nights*_.random(200,249)
+    "price":        nights * _.random(200, 249)
   };
 
-  db.get('reservations')
+  db.get("reservations")
     .push(reservation)
     .value();
 
@@ -77,10 +77,10 @@ var make = function(id, arrivalDate, nights, guests) {
  */
 var confirm = function(id) {
   var reservation = getById(id);
-  reservation.status = 'Confirmed';
+  reservation.status = "Confirmed";
 
   subscriptions.notify({
-    type: 'reservation-confirmation',
+    type: "reservation-confirmation",
     reservation: reservation
   });
 };

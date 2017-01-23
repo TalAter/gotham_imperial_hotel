@@ -1,6 +1,6 @@
-var db = require('./db.js');
-var webpush = require('web-push');
-var pushKeys = require('./push-keys.js');
+var db = require("./db.js");
+var webpush = require("web-push");
+var pushKeys = require("./push-keys.js");
 
 /**
  * Adds a subscription details object to the database, if it doesn't already exist
@@ -9,15 +9,15 @@ var pushKeys = require('./push-keys.js');
  */
 var add = function(subscription) {
   // Make sure subscription doesn't already exist
-  var existingSubscriptions = db.get('subscriptions')
-  .filter({endpoint: subscription.endpoint})
-  .value();
+  var existingSubscriptions = db.get("subscriptions")
+    .filter({endpoint: subscription.endpoint})
+    .value();
   if (existingSubscriptions.length > 0) {
     return;
   }
 
   // Add the new subscription
-  db.get('subscriptions')
+  db.get("subscriptions")
     .push(subscription)
     .value();
 };
@@ -35,13 +35,16 @@ var notify = function(pushPayload) {
     pushKeys.privateKey
   );
 
-  var subscriptions = db.get('subscriptions').value();
+  var subscriptions = db.get("subscriptions").value();
   subscriptions.forEach(function(subscription) {
-    webpush.sendNotification(subscription, JSON.stringify(pushPayload)).then(function() {
-      console.log('Notification sent');
-    }).catch(function() {
-      console.log('Notification failed');
-    });
+    webpush
+      .sendNotification(subscription, JSON.stringify(pushPayload))
+      .then(function() {
+        console.log("Notification sent");
+      })
+      .catch(function() {
+        console.log("Notification failed");
+      });
   });
 };
 

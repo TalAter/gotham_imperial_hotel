@@ -1,4 +1,4 @@
-var db = require('./db.js');
+var db = require("./db.js");
 
 /**
  * Get all events from the database
@@ -6,7 +6,7 @@ var db = require('./db.js');
  * @returns {Array}
  */
 var get = function() {
-  return db.get('events').value();
+  return db.get("events").value();
 };
 
 module.exports = {

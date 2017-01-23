@@ -1,10 +1,12 @@
-var webpush = require('web-push');
-var fs = require('fs');
+var webpush = require("web-push");
+var fs = require("fs");
 var vapidKeys = webpush.generateVAPIDKeys();
 
-console.log('Your new public key is:');
+console.log("Your new public key is:");
 console.log(vapidKeys.publicKey);
-console.log('This key should be used as the applicationServerKey when creating a subscription');
+console.log(
+  "This key should be used as the applicationServerKey when creating a subscription"
+);
 console.log();
 
 var pushKeysContents = `module.exports = {
@@ -14,13 +16,13 @@ var pushKeysContents = `module.exports = {
   privateKey: '${vapidKeys.privateKey}'
 };`;
 
-var pushKeysFilePath = __dirname+'/push-keys.js';
+var pushKeysFilePath = __dirname + "/push-keys.js";
 
 fs.writeFile(pushKeysFilePath, pushKeysContents, function(err) {
   if (err) {
-    console.log('Error creating push-keys.js');
+    console.log("Error creating push-keys.js");
     console.log(err);
   }
-  console.log(pushKeysFilePath+' created.');
-  console.log('You should update it with your GCM API key, and email');
+  console.log(pushKeysFilePath + " created.");
+  console.log("You should update it with your GCM API key, and email");
 });
