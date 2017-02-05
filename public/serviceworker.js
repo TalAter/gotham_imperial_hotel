@@ -28,6 +28,7 @@ var CACHED_URLS = [
   '/img/about-hotel-luxury.jpg',
   '/img/event-default.jpg',
   '/img/map-offline.jpg',
+  '/img/reservation-gih.jpg',
   // JSON
   '/events.json'
 ];
