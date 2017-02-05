@@ -17,5 +17,6 @@
     }
   ],
   "theme_color": "#242424",
-  "background_color": "#242424"
+  "background_color": "#242424",
+  "gcm_sender_id": "8pXwyAlfvq7AzaihSI-Lc8eA0q7RTvh7wSXU1iU"
 }
