@@ -1,6 +1,17 @@
 var db = require("./db.js");
 var webpush = require("web-push");
-var pushKeys = require("./push-keys.js");
+
+// IMPORTANT
+// Once you have generated the keys, there is no need for this try catch statement,
+// or the temporary-push-keys.js file.
+// It is only here so that the server can run while you are working on earlier
+// chapters, and have not generated your own push keys yet.
+var pushKeys;
+try {
+  pushKeys = require("./push-keys.js");
+} catch (error) {
+  pushKeys = require("./temporary-push-keys.js");
+}
 
 /**
  * Adds a subscription details object to the database, if it doesn't already exist
