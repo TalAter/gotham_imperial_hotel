@@ -4,10 +4,10 @@ $(document).ready(function() {
   populateReservations();
 
   // Add booking widget functionality
-  $('#booking-widget-container button').click(function() {
-    var arrivalDate = $('#form--arrival-date').val();
-    var nights = $('#form--nights').val();
-    var guests = $('#form--guests').val();
+  $("#booking-widget-container button").click(function() {
+    var arrivalDate = $("#form--arrival-date").val();
+    var nights = $("#form--nights").val();
+    var guests = $("#form--guests").val();
     var id = Date.now().toString().substring(3,11);
     if (!arrivalDate || !nights || !guests) {
       return false;
@@ -16,7 +16,7 @@ $(document).ready(function() {
     return false;
   });
 
-  $('#offer-notification a').click(function(event) {
+  $("#offer-notification a").click(function(event) {
     event.preventDefault();
     hideNotificationOffer();
     subscribeUserToNotifications();
@@ -33,8 +33,8 @@ var populateReservations = function() {
 
 // Go over unconfirmed reservations, and verify their status against the server.
 var checkUnconfirmedReservations = function() {
-  $('.reservation-card--unconfirmed').each(function() {
-    $.getJSON('/reservation-details.json', {id: $(this).data('id')}, function(data) {
+  $(".reservation-card--unconfirmed").each(function() {
+    $.getJSON("/reservation-details.json", {id: $(this).data("id")}, function(data) {
       updateInObjectStore("reservations", data.id, data);
       updateReservationDisplay(data);
     });
@@ -42,10 +42,10 @@ var checkUnconfirmedReservations = function() {
 };
 
 var urlBase64ToUint8Array = function(base64String) {
-  var padding = '='.repeat((4 - base64String.length % 4) % 4);
+  var padding = "=".repeat((4 - base64String.length % 4) % 4);
   var base64 = (base64String + padding)
-    .replace(/\-/g, '+')
-    .replace(/_/g, '/');
+    .replace(/\-/g, "+")
+    .replace(/_/g, "/");
   var rawData = window.atob(base64);
   var outputArray = new Uint8Array(rawData.length);
   for (var i = 0; i < rawData.length; ++i) {
@@ -60,20 +60,20 @@ var subscribeUserToNotifications = function() {
       var subscribeOptions = {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
-          'BKQnRd5V_u942j95_etSdNS6EkYse_HcG-KEbPm_KfvkrGGN_c45G_POcmP8yC_f90SB37ybDoUEcru6Xbr7pTY'
+          "BKQnRd5V_u942j95_etSdNS6EkYse_HcG-KEbPm_KfvkrGGN_c45G_POcmP8yC_f90SB37ybDoUEcru6Xbr7pTY"
         )
       };
       navigator.serviceWorker.ready.then(function(registration) {
         return registration.pushManager.subscribe(subscribeOptions);
       }).then(function(subscription) {
         var fetchOptions = {
-          method: 'post',
+          method: "post",
           headers: new Headers({
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }),
           body: JSON.stringify(subscription)
         };
-        return fetch('/add-subscription', fetchOptions);
+        return fetch("/add-subscription", fetchOptions);
       });
     }
   });
@@ -98,16 +98,16 @@ var addReservation = function(id, arrivalDate, nights, guests) {
     arrivalDate:  arrivalDate,
     nights:       nights,
     guests:       guests,
-    status:       'Sending'
+    status:       "Sending"
   };
   addToObjectStore("reservations", reservationDetails);
   renderReservation(reservationDetails);
-  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+  if ("serviceWorker" in navigator && "SyncManager" in window) {
     navigator.serviceWorker.ready.then(function(registration) {
-      registration.sync.register('sync-reservations');
+      registration.sync.register("sync-reservations");
     });
   } else {
-    $.getJSON('/make-reservation', reservationDetails, function(data) {
+    $.getJSON("/make-reservation", reservationDetails, function(data) {
       updateReservationDisplay(data);
     });
   }
@@ -127,7 +127,7 @@ var addReservation = function(id, arrivalDate, nights, guests) {
 
 // Goes over an array of reservations, and renders each of them
 var renderReservations = function(data) {
-  $('div#reservation-loading').hide();
+  $("div#reservation-loading").hide();
   data.forEach(function(reservation) {
     renderReservation(reservation);
   });
@@ -136,62 +136,62 @@ var renderReservations = function(data) {
 // Renders a reservation card and adds it to the DOM.
 var renderReservation = function(reservation) {
   var newReservation = $(
-    '<div class="reservation-card" id="reservation-'+reservation['id']+'" data-id="'+reservation['id']+'">'+
-      '<img src="/img/reservation-gih.jpg" alt="Gotham Imperial Hotel" class="reserved-hotel-image">'+
-      '<div class="reservation-details">'+
-        '<div class="reserved-hotel-details">'+
-          '<strong>Gotham Imperial Hotel</strong>'+
-          '<p>1 Imperial Plaza, Gotham.</p>'+
-          '<p class="arrivalDate">Check-in: <span>'+reservation['arrivalDate']+'</span>.</p>'+
-          '<p>'+reservation['nights']+' nights. '+reservation['guests']+' guests.</p>'+
-        '</div>'+
-        '<div class="reservation-price">'+
-          '<p>Total price</p>'+
-          '<p><strong>'+(reservation['price'] ? '§'+reservation['price']+'.99' : '?')+'</strong></p>'+
-        '</div>'+
-      '</div>'+
-      '<div class="reservation-actions">'+
-        '<a href="#">Modify booking details</a>'+
-        '<div class="reservation-status">'+reservation['status']+'</div>'+
-      '</div>'+
-      '<div class="reservation-meta-data">'+
-        '<strong>Order number:</strong> <span>'+reservation['id']+'</span>'+
-        '<strong>Booked on:</strong> <span class="reservation-bookedOn">'+(reservation['bookedOn'] ? reservation['bookedOn'] : 'n/a')+'</span>'+
-      '</div>'+
-    '</div>'
+    "<div class=\"reservation-card\" id=\"reservation-"+reservation["id"]+"\" data-id=\""+reservation["id"]+"\">"+
+      "<img src=\"/img/reservation-gih.jpg\" alt=\"Gotham Imperial Hotel\" class=\"reserved-hotel-image\">"+
+      "<div class=\"reservation-details\">"+
+        "<div class=\"reserved-hotel-details\">"+
+          "<strong>Gotham Imperial Hotel</strong>"+
+          "<p>1 Imperial Plaza, Gotham.</p>"+
+          "<p class=\"arrivalDate\">Check-in: <span>"+reservation["arrivalDate"]+"</span>.</p>"+
+          "<p>"+reservation["nights"]+" nights. "+reservation["guests"]+" guests.</p>"+
+        "</div>"+
+        "<div class=\"reservation-price\">"+
+          "<p>Total price</p>"+
+          "<p><strong>"+(reservation["price"] ? "§"+reservation["price"]+".99" : "?")+"</strong></p>"+
+        "</div>"+
+      "</div>"+
+      "<div class=\"reservation-actions\">"+
+        "<a href=\"#\">Modify booking details</a>"+
+        "<div class=\"reservation-status\">"+reservation["status"]+"</div>"+
+      "</div>"+
+      "<div class=\"reservation-meta-data\">"+
+        "<strong>Order number:</strong> <span>"+reservation["id"]+"</span>"+
+        "<strong>Booked on:</strong> <span class=\"reservation-bookedOn\">"+(reservation["bookedOn"] ? reservation["bookedOn"] : "n/a")+"</span>"+
+      "</div>"+
+    "</div>"
   );
-  $('#reservations-container').append(newReservation);
-  if (reservation['status'] !== 'Confirmed') {
-    newReservation.addClass('reservation-card--unconfirmed');
+  $("#reservations-container").append(newReservation);
+  if (reservation["status"] !== "Confirmed") {
+    newReservation.addClass("reservation-card--unconfirmed");
   }
 
   // Adds an event listener to the modify reservation button.
-  $('#reservation-'+reservation['id']+' a').click(function() {
-    var possibleResponses = ['Orders are non-negotiable!', 'Not open to discussion!'];
+  $("#reservation-"+reservation["id"]+" a").click(function() {
+    var possibleResponses = ["Orders are non-negotiable!", "Not open to discussion!"];
     $(this).text(possibleResponses[Math.floor(Math.random()*possibleResponses.length)]);
-    $(this).addClass('reservation-action--error');
+    $(this).addClass("reservation-action--error");
     return false;
   });
 
 };
 
 var updateReservationDisplay = function(reservation) {
-  var reservationNode = $('#reservation-'+reservation.id);
-  $('.reservation-bookedOn', reservationNode).text(reservation.bookedOn);
-  $('.reservation-price strong', reservationNode).text('§'+reservation.price+'.99');
-  $('.reservation-status', reservationNode).text(reservation.status);
-  $('.arrivalDate span', reservationNode).text(reservation.arrivalDate);
-  if (reservation['status'] !== 'Confirmed') {
-    reservationNode.addClass('reservation-card--unconfirmed');
+  var reservationNode = $("#reservation-"+reservation.id);
+  $(".reservation-bookedOn", reservationNode).text(reservation.bookedOn);
+  $(".reservation-price strong", reservationNode).text("§"+reservation.price+".99");
+  $(".reservation-status", reservationNode).text(reservation.status);
+  $(".arrivalDate span", reservationNode).text(reservation.arrivalDate);
+  if (reservation["status"] !== "Confirmed") {
+    reservationNode.addClass("reservation-card--unconfirmed");
   } else {
-    reservationNode.removeClass('reservation-card--unconfirmed');
+    reservationNode.removeClass("reservation-card--unconfirmed");
   }
 };
 
 var showNotificationOffer = function() {
-  $('#offer-notification').removeClass('modal--hide');
+  $("#offer-notification").removeClass("modal--hide");
 };
 
 var hideNotificationOffer = function() {
-  $('#offer-notification').addClass('modal--hide');
+  $("#offer-notification").addClass("modal--hide");
 };

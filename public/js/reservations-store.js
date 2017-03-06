@@ -23,7 +23,7 @@ var openDatabase = function() {
           { keyPath: "id" }
         );
       } else {
-        reservationsStore = upgradeTransaction.objectStore('reservations');
+        reservationsStore = upgradeTransaction.objectStore("reservations");
       }
 
       if (!reservationsStore.indexNames.contains("idx_status")) {
@@ -51,9 +51,9 @@ var openObjectStore = function(db, storeName, transactionMode) {
 var addToObjectStore = function(storeName, object) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
-      return openObjectStore(db, storeName, 'readwrite');
+      return openObjectStore(db, storeName, "readwrite");
     }).then(function(objectStore) {
-        objectStore.add(object).onsuccess = resolve;
+      objectStore.add(object).onsuccess = resolve;
     }).catch(function(errorMessage) {
       reject(errorMessage);
     });
@@ -63,12 +63,12 @@ var addToObjectStore = function(storeName, object) {
 var updateInObjectStore = function(storeName, id, object) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
-      return openObjectStore(db, storeName, 'readwrite');
+      return openObjectStore(db, storeName, "readwrite");
     }).then(function(objectStore) {
       objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
         if (!cursor) {
-          reject('Reservation not found in object store');
+          reject("Reservation not found in object store");
         }
         if (cursor.value.id === id) {
           cursor.update(object).onsuccess = resolve;
@@ -85,7 +85,7 @@ var updateInObjectStore = function(storeName, id, object) {
 var getReservations = function(indexName, indexValue) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
-      return openObjectStore(db, 'reservations');
+      return openObjectStore(db, "reservations");
     }).then(function(objectStore) {
       var reservations = [];
       var cursor;
@@ -105,7 +105,7 @@ var getReservations = function(indexName, indexValue) {
           } else {
             getReservationsFromServer().then(function(reservations) {
               openDatabase().then(function(db) {
-                return openObjectStore(db, 'reservations', 'readwrite');
+                return openObjectStore(db, "reservations", "readwrite");
               }).then(function(objectStore) {
                 for (var i = 0; i < reservations.length; i++) {
                   objectStore.add(reservations[i]);
@@ -127,9 +127,9 @@ var getReservations = function(indexName, indexValue) {
 var getReservationsFromServer = function() {
   return new Promise(function(resolve, reject) {
     if (this.$) {
-      $.getJSON('/reservations.json', resolve);
+      $.getJSON("/reservations.json", resolve);
     } else if (self.fetch) {
-      fetch('/reservations.json').then(function(response) {
+      fetch("/reservations.json").then(function(response) {
         return response.json().then(function(reservations) {
           resolve(reservations);
         });

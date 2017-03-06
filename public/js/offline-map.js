@@ -1,1 +1,1 @@
-document.getElementById('map-container').classList.add('offline-map');
+document.getElementById("map-container").classList.add("offline-map");
