@@ -5,5 +5,12 @@
     "jquery": true,
     "es6": true,
     "node": false
+  },
+  "globals": {
+    "updateReservationDisplay": false,
+    "getReservations": false,
+    "updateInObjectStore": false,
+    "addToObjectStore": false,
+    "ProgressiveKITT": false
   }
 }
