@@ -4,16 +4,13 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
-    jshint: {
+    eslint: {
       all: [
         "public/*.js",
         "public/js/*.js",
         "server/*.js",
-        "Gruntfile.js"
-      ],
-      options: {
-        jshintrc: true
-      }
+        "Gruntfile.js",
+      ]
     },
     watch: {
       files: ["public/**/*", "server/**/*", "!server/db.json", "!**/node_modules/**"],
@@ -33,11 +30,11 @@ module.exports = function(grunt) {
   });
 
   // Load NPM Tasks
-  grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-eslint");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-express-server");
 
   // Register task(s).
-  grunt.registerTask("default", ["jshint"]);
+  grunt.registerTask("default", ["eslint"]);
   grunt.registerTask("serve", ["default", "express", "watch"]);
 };
