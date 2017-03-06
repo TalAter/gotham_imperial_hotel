@@ -39,7 +39,7 @@ var openDatabase = function() {
 
 // Returns a promise which resolves with an object store object
 var openObjectStore = function(db, storeName, transactionMode) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     var objectStore = db
       .transaction(storeName, transactionMode)
       .objectStore(storeName);
@@ -48,6 +48,7 @@ var openObjectStore = function(db, storeName, transactionMode) {
 };
 
 
+/* exported addToObjectStore */
 var addToObjectStore = function(storeName, object) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
@@ -60,6 +61,7 @@ var addToObjectStore = function(storeName, object) {
   });
 };
 
+/* exported updateInObjectStore */
 var updateInObjectStore = function(storeName, id, object) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
@@ -82,8 +84,9 @@ var updateInObjectStore = function(storeName, id, object) {
   });
 };
 
+/* exported getReservations */
 var getReservations = function(indexName, indexValue) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     openDatabase().then(function(db) {
       return openObjectStore(db, "reservations");
     }).then(function(objectStore) {
@@ -116,7 +119,7 @@ var getReservations = function(indexName, indexValue) {
           }
         }
       };
-    }).catch(function(errorMessage) {
+    }).catch(function() {
       getReservationsFromServer().then(function(reservations) {
         resolve(reservations);
       });
@@ -125,7 +128,7 @@ var getReservations = function(indexName, indexValue) {
 };
 
 var getReservationsFromServer = function() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     if (this.$) {
       $.getJSON("/reservations.json", resolve);
     } else if (self.fetch) {
