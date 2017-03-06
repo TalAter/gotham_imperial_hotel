@@ -10,10 +10,10 @@ console.log(
 console.log();
 
 var pushKeysContents = `module.exports = {
-  GCMAPIKey: 'YOUR_GCM_API_KEY',
-  subject: 'mailto:your@email.com',
-  publicKey: '${vapidKeys.publicKey}',
-  privateKey: '${vapidKeys.privateKey}'
+  GCMAPIKey: "YOUR_GCM_API_KEY",
+  subject: "mailto:your@email.com",
+  publicKey: "${vapidKeys.publicKey}",
+  privateKey: "${vapidKeys.privateKey}"
 };`;
 
 var pushKeysFilePath = __dirname + "/push-keys.js";
