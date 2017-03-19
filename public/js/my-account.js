@@ -194,3 +194,20 @@ var showNotificationOffer = function() {
 var hideNotificationOffer = function() {
   $("#offer-notification").addClass("modal--hide");
 };
+
+$(document).ready(function() {
+  // Prepopulate reservation form from querystring and create reservation
+  var url = new URL(window.location);
+  var params = url.searchParams;
+  if (
+    params.has("form--arrival-date") &&
+    params.has("form--nights") &&
+    params.has("form--guests")
+  ) {
+    $("#form--arrival-date").val(params.get("form--arrival-date"));
+    $("#form--nights").val(params.get("form--nights"));
+    $("#form--guests").val(params.get("form--guests"));
+    $("form#reservation-form").submit();
+    window.history.replaceState(null, "", url.origin + url.pathname);
+  }
+});
