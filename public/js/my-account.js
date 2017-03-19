@@ -4,7 +4,8 @@ $(document).ready(function() {
   populateReservations();
 
   // Add booking widget functionality
-  $("#booking-widget-container button").click(function() {
+  $("#reservation-form").submit(function(event) {
+    event.preventDefault();
     var arrivalDate = $("#form--arrival-date").val();
     var nights = $("#form--nights").val();
     var guests = $("#form--guests").val();
