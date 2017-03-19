@@ -30,7 +30,8 @@ var CACHED_URLS = [
   "/img/map-offline.jpg",
   "/img/reservation-gih.jpg",
   // JSON
-  "/events.json"
+  "/events.json",
+  "/reservations.json"
 ];
 var googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=" +
   "AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap";
