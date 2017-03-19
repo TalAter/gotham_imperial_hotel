@@ -125,9 +125,9 @@ var addReservation = function(id, arrivalDate, nights, guests) {
 /* ************************************************************ */
 
 // Goes over an array of reservations, and renders each of them
-var renderReservations = function(data) {
+var renderReservations = function(reservations) {
   $("div#reservation-loading").hide();
-  data.forEach(function(reservation) {
+  reservations.forEach(function(reservation) {
     renderReservation(reservation);
   });
 };
