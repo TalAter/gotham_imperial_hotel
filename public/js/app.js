@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
 }
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener("message", function (event) {
+  navigator.serviceWorker.addEventListener("message", function(event) {
     var data = event.data;
     if (data.action === "navigate") {
       window.location.href = data.url;

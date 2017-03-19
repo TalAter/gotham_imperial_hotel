@@ -8,7 +8,7 @@ $(document).ready(function() {
     var arrivalDate = $("#form--arrival-date").val();
     var nights = $("#form--nights").val();
     var guests = $("#form--guests").val();
-    var id = Date.now().toString().substring(3,11);
+    var id = Date.now().toString().substring(3, 11);
     if (!arrivalDate || !nights || !guests) {
       return false;
     }
@@ -43,9 +43,7 @@ var checkUnconfirmedReservations = function() {
 
 var urlBase64ToUint8Array = function(base64String) {
   var padding = "=".repeat((4 - base64String.length % 4) % 4);
-  var base64 = (base64String + padding)
-    .replace(/\-/g, "+")
-    .replace(/_/g, "/");
+  var base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
   var rawData = window.atob(base64);
   var outputArray = new Uint8Array(rawData.length);
   for (var i = 0; i < rawData.length; ++i) {
@@ -55,7 +53,7 @@ var urlBase64ToUint8Array = function(base64String) {
 };
 
 var subscribeUserToNotifications = function() {
-  Notification.requestPermission().then(function(permission){
+  Notification.requestPermission().then(function(permission) {
     if (permission === "granted") {
       var subscribeOptions = {
         userVisibleOnly: true,
@@ -176,7 +174,7 @@ var renderReservation = function(reservation) {
 };
 
 var updateReservationDisplay = function(reservation) {
-  var reservationNode = $("#reservation-"+reservation.id);
+  var reservationNode = $("#reservation-" + reservation.id);
   $(".reservation-bookedOn", reservationNode).text(reservation.bookedOn);
   $(".reservation-price strong", reservationNode).text("§"+reservation.price+".99");
   $(".reservation-status", reservationNode).text(reservation.status);

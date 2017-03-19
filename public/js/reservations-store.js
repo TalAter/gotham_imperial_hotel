@@ -4,7 +4,7 @@ var DB_NAME = "gih-reservations";
 // Returns a promise which resolves with a database object if it is  opened
 // successfully or rejects with an error message if it didn't.
 var openDatabase = function() {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     // Make sure IndexedDB is supported before attempting to use it
     if (!this.indexedDB) {
       reject("IndexedDB not supported");
@@ -39,7 +39,7 @@ var openDatabase = function() {
 
 // Returns a promise which resolves with an object store object
 var openObjectStore = function(db, storeName, transactionMode) {
-  return new Promise(function (resolve) {
+  return new Promise(function(resolve) {
     var objectStore = db
       .transaction(storeName, transactionMode)
       .objectStore(storeName);
