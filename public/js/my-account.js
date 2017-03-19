@@ -159,7 +159,7 @@ var renderReservation = function(reservation) {
       "</div>"+
     "</div>"
   );
-  $("#reservations-container").append(newReservation);
+  $("#reservations-container").prepend(newReservation);
   if (reservation["status"] !== "Confirmed") {
     newReservation.addClass("reservation-card--unconfirmed");
   }
