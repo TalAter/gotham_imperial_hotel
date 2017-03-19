@@ -22,6 +22,7 @@ var CACHED_URLS = [
   "/img/logo.png",
   "/img/logo-header.png",
   "/img/event-calendar-link.jpg",
+  "/img/switch.png",
   "/img/logo-top-background.png",
   "/img/jumbo-background.jpg",
   "/img/about-hotel-spa.jpg",
