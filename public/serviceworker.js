@@ -32,7 +32,7 @@ var CACHED_URLS = [
   // JSON
   "/events.json"
 ];
-var googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key="+
+var googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key=" +
   "AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap";
 
 self.addEventListener("install", function(event) {
@@ -207,8 +207,8 @@ self.addEventListener("push", function(event) {
       updateInObjectStore(
         "reservations",
         reservation.id,
-        reservation)
-      .then(function() {
+        reservation
+      ).then(function() {
         return self.registration.showNotification("Reservation Confirmed", {
           body: "Reservation for "+reservation.arrivalDate+" has been confirmed.",
           icon: "/img/reservation-gih.jpg",
