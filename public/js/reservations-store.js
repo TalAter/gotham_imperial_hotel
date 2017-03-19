@@ -37,14 +37,11 @@ var openDatabase = function() {
   });
 };
 
-// Returns a promise which resolves with an object store object
+// Returns an object store object
 var openObjectStore = function(db, storeName, transactionMode) {
-  return new Promise(function(resolve) {
-    var objectStore = db
-      .transaction(storeName, transactionMode)
-      .objectStore(storeName);
-    resolve(objectStore);
-  });
+  return db
+    .transaction(storeName, transactionMode)
+    .objectStore(storeName);
 };
 
 
@@ -52,9 +49,8 @@ var openObjectStore = function(db, storeName, transactionMode) {
 var addToObjectStore = function(storeName, object) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
-      return openObjectStore(db, storeName, "readwrite");
-    }).then(function(objectStore) {
-      objectStore.add(object).onsuccess = resolve;
+      openObjectStore(db, storeName, "readwrite")
+        .add(object).onsuccess = resolve;
     }).catch(function(errorMessage) {
       reject(errorMessage);
     });
@@ -65,19 +61,18 @@ var addToObjectStore = function(storeName, object) {
 var updateInObjectStore = function(storeName, id, object) {
   return new Promise(function(resolve, reject) {
     openDatabase().then(function(db) {
-      return openObjectStore(db, storeName, "readwrite");
-    }).then(function(objectStore) {
-      objectStore.openCursor().onsuccess = function(event) {
-        var cursor = event.target.result;
-        if (!cursor) {
-          reject("Reservation not found in object store");
-        }
-        if (cursor.value.id === id) {
-          cursor.update(object).onsuccess = resolve;
-          return;
-        }
-        cursor.continue();
-      };
+      openObjectStore(db, storeName, "readwrite")
+        .openCursor().onsuccess = function(event) {
+          var cursor = event.target.result;
+          if (!cursor) {
+            reject("Reservation not found in object store");
+          }
+          if (cursor.value.id === id) {
+            cursor.update(object).onsuccess = resolve;
+            return;
+          }
+          cursor.continue();
+        };
     }).catch(function(errorMessage) {
       reject(errorMessage);
     });
@@ -88,8 +83,7 @@ var updateInObjectStore = function(storeName, id, object) {
 var getReservations = function(indexName, indexValue) {
   return new Promise(function(resolve) {
     openDatabase().then(function(db) {
-      return openObjectStore(db, "reservations");
-    }).then(function(objectStore) {
+      var objectStore = openObjectStore(db, "reservations");
       var reservations = [];
       var cursor;
       if (indexName && indexValue) {
@@ -108,8 +102,7 @@ var getReservations = function(indexName, indexValue) {
           } else {
             getReservationsFromServer().then(function(reservations) {
               openDatabase().then(function(db) {
-                return openObjectStore(db, "reservations", "readwrite");
-              }).then(function(objectStore) {
+                var objectStore = openObjectStore(db, "reservations", "readwrite");
                 for (var i = 0; i < reservations.length; i++) {
                   objectStore.add(reservations[i]);
                 }
