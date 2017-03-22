@@ -126,9 +126,9 @@ var getReservationsFromServer = function() {
       $.getJSON("/reservations.json", resolve);
     } else if (self.fetch) {
       fetch("/reservations.json").then(function(response) {
-        return response.json().then(function(reservations) {
-          resolve(reservations);
-        });
+        return response.json();
+      }).then(function(reservations) {
+        resolve(reservations);
       });
     }
   });
