@@ -17,20 +17,30 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-$(document).ready(function() {
+var bootApp = function() {
   // Fetch and render upcoming events in the hotel
-  $.getJSON("/events.json", renderEvents);
+  fetch("/events.json")
+    .then(function(response){
+      return response.json();
+    }).then(renderEvents);
 
-  $("#logout-button").click(function(event) {
+    
+  var logoutHandler = function(event) {
     if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
       event.preventDefault();
       navigator.serviceWorker.controller.postMessage(
         {action: "logout"}
       );
     }
-  });
-});
+  };
+  
+  var logoutButton = document.getElementById("logout-button");
+  if(logoutButton){
+    logoutButton.addEventListener("click", logoutHandler, false);
+  }
+};
 
+document.addEventListener("DOMContentLoaded", bootApp, false);
 
 
 
@@ -44,13 +54,19 @@ $(document).ready(function() {
 
 var renderEvents = function(data) {
   data.forEach(function(event) {
-    $(
-      "<div class=\"col-lg-2 col-md-4 col-sm-6 event-container\"><div class=\"event-card\">"+
+    var eventHTML = 
+      "<div class=\"event-card\">"+
       "<div class=\"event-date\">"+event.date+"</div>"+
       "<img src=\""+event.img+"\" alt=\""+event.title+"\" class=\"img-responsive\" />"+
       "<h4>"+event.title+"</h4>"+
       "<p>"+event.description+"</p>"+
-      "</div></div>"
-    ).insertBefore("#events-container div.calendar-link-container");
+      "</div>";
+
+    var eventDiv = document.createElement("div");
+    eventDiv.className = "col-lg-2 col-md-4 col-sm-6 event-container";
+    eventDiv.innerHTML = eventHTML;
+
+    var eventCalendar = document.querySelector("#events-container div.calendar-link-container");
+    eventCalendar.parentElement.insertBefore(eventDiv, eventCalendar);
   });
 };

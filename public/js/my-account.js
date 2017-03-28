@@ -1,31 +1,35 @@
-$(document).ready(function() {
-
+var boot = function() {
   // Fetch and render user reservations
   populateReservations();
 
   // Add booking widget functionality
-  $("#reservation-form").submit(function(event) {
+  var processRegistration = function(event) {
     event.preventDefault();
-    var arrivalDate = $("#form--arrival-date").val();
-    var nights = $("#form--nights").val();
-    var guests = $("#form--guests").val();
+    var arrivalDate = document.getElementById("form--arrival-date").value;
+    var nights = document.getElementById("form--nights").value;
+    var guests = document.getElementById("form--guests").value;
     var id = Date.now().toString().substring(3, 11);
     if (!arrivalDate || !nights || !guests) {
       return false;
     }
     addReservation(id, arrivalDate, nights, guests);
     return false;
-  });
+  };
+  document.getElementById("reservation-form").addEventListener("submit", processRegistration, false);
 
-  $("#offer-notification a").click(function(event) {
+  var processNotificationSubscribe = function(event) {
     event.preventDefault();
     hideNotificationOffer();
     subscribeUserToNotifications();
-  });
+  };
+  document.querySelector("#offer-notification a").addEventListener("click", processNotificationSubscribe, false);
 
   // Periodically check for unconfirmed bookings
   setInterval(checkUnconfirmedReservations, 5000);
-});
+};
+
+document.addEventListener("DOMContentLoaded", boot, false);
+
 
 // Fetches reservations from server and renders them to the page
 var populateReservations = function() {
@@ -34,11 +38,16 @@ var populateReservations = function() {
 
 // Go over unconfirmed reservations, and verify their status against the server.
 var checkUnconfirmedReservations = function() {
-  $(".reservation-card--unconfirmed").each(function() {
-    $.getJSON("/reservation-details.json", {id: $(this).data("id")}, function(data) {
-      updateInObjectStore("reservations", data.id, data);
-      updateReservationDisplay(data);
-    });
+  var unconfirmed = document.querySelectorAll(".reservation-card--unconfirmed");
+  unconfirmed.forEach(function(reservation) {
+    fetch("/reservation-details.json?id=" + reservation.getAttribute("data-id"))
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(data){
+        updateInObjectStore("reservations", data.id, data);
+        updateReservationDisplay(data);
+      });
   });
 };
 
@@ -106,9 +115,12 @@ var addReservation = function(id, arrivalDate, nights, guests) {
       registration.sync.register("sync-reservations");
     });
   } else {
-    $.getJSON("/make-reservation", reservationDetails, function(data) {
-      updateReservationDisplay(data);
-    });
+    var params = Object.keys(reservationDetails).map(k => k+"="+reservationDetails[k]).join("&");
+    fetch("/make-reservation?" + params)
+      .then(function(response){
+        return response.json();
+      })
+      .then(updateReservationDisplay);
   }
   offerNotification();
 };
@@ -126,7 +138,7 @@ var addReservation = function(id, arrivalDate, nights, guests) {
 
 // Goes over an array of reservations, and renders each of them
 var renderReservations = function(reservations) {
-  $("div#reservation-loading").hide();
+  document.querySelector("div#reservation-loading").style.display = "none";
   reservations.forEach(function(reservation) {
     renderReservation(reservation);
   });
@@ -134,68 +146,75 @@ var renderReservations = function(reservations) {
 
 // Renders a reservation card and adds it to the DOM.
 var renderReservation = function(reservation) {
-  var newReservation = $(
-    "<div class=\"reservation-card\" id=\"reservation-"+reservation["id"]+"\" data-id=\""+reservation["id"]+"\">"+
-      "<img src=\"/img/reservation-gih.jpg\" alt=\"Gotham Imperial Hotel\" class=\"reserved-hotel-image\">"+
-      "<div class=\"reservation-details\">"+
-        "<div class=\"reserved-hotel-details\">"+
-          "<strong>Gotham Imperial Hotel</strong>"+
-          "<p>1 Imperial Plaza, Gotham.</p>"+
-          "<p class=\"arrivalDate\">Check-in: <span>"+reservation["arrivalDate"]+"</span>.</p>"+
-          "<p>"+reservation["nights"]+" nights. "+reservation["guests"]+" guests.</p>"+
-        "</div>"+
-        "<div class=\"reservation-price\">"+
-          "<p>Total price</p>"+
-          "<p><strong>"+(reservation["price"] ? "§"+reservation["price"]+".99" : "?")+"</strong></p>"+
-        "</div>"+
+  var html =
+    "<img src=\"/img/reservation-gih.jpg\" alt=\"Gotham Imperial Hotel\" class=\"reserved-hotel-image\">"+
+    "<div class=\"reservation-details\">"+
+      "<div class=\"reserved-hotel-details\">"+
+        "<strong>Gotham Imperial Hotel</strong>"+
+        "<p>1 Imperial Plaza, Gotham.</p>"+
+        "<p class=\"arrivalDate\">Check-in: <span>"+reservation["arrivalDate"]+"</span>.</p>"+
+        "<p>"+reservation["nights"]+" nights. "+reservation["guests"]+" guests.</p>"+
       "</div>"+
-      "<div class=\"reservation-actions\">"+
-        "<a href=\"#\">Modify booking details</a>"+
-        "<div class=\"reservation-status\">"+reservation["status"]+"</div>"+
+      "<div class=\"reservation-price\">"+
+        "<p>Total price</p>"+
+        "<p><strong>"+(reservation["price"] ? "§"+reservation["price"]+".99" : "?")+"</strong></p>"+
       "</div>"+
-      "<div class=\"reservation-meta-data\">"+
-        "<strong>Order number:</strong> <span>"+reservation["id"]+"</span>"+
-        "<strong>Booked on:</strong> <span class=\"reservation-bookedOn\">"+(reservation["bookedOn"] ? reservation["bookedOn"] : "n/a")+"</span>"+
-      "</div>"+
-    "</div>"
-  );
-  $("#reservation-cards").prepend(newReservation);
+    "</div>"+
+    "<div class=\"reservation-actions\">"+
+      "<a href=\"#\">Modify booking details</a>"+
+      "<div class=\"reservation-status\">"+reservation["status"]+"</div>"+
+    "</div>"+
+    "<div class=\"reservation-meta-data\">"+
+      "<strong>Order number:</strong> <span>"+reservation["id"]+"</span>"+
+      "<strong>Booked on:</strong> <span class=\"reservation-bookedOn\">"+(reservation["bookedOn"] ? reservation["bookedOn"] : "n/a")+"</span>"+
+    "</div>";
+
+  var reservationDiv = document.createElement("div");
+  reservationDiv.className = "reservation-card";
+  reservationDiv.id = "reservation-"+reservation["id"];
+  reservationDiv.setAttribute("data-id", reservation["id"]);
+  reservationDiv.innerHTML = html;
+
+  var reservationCards = document.getElementById("reservation-cards");
+  reservationCards.insertBefore(reservationDiv, reservationCards.firstChild);
+
   if (reservation["status"] !== "Confirmed") {
-    newReservation.addClass("reservation-card--unconfirmed");
+    document.getElementById("reservation-"+reservation["id"]).classList.add("reservation-card--unconfirmed");
   }
 
   // Adds an event listener to the modify reservation button.
-  $("#reservation-"+reservation["id"]+" a").click(function() {
+  var processModifyReservation = function(event) {
+    event.preventDefault();
     var possibleResponses = ["Orders are non-negotiable!", "Not open to discussion!"];
-    $(this).text(possibleResponses[Math.floor(Math.random()*possibleResponses.length)]);
-    $(this).addClass("reservation-action--error");
+    this.innerText = possibleResponses[Math.floor(Math.random()*possibleResponses.length)];
+    this.classList.add("reservation-action--error");
     return false;
-  });
-
+  };
+  document.querySelector("#reservation-"+reservation["id"]+" a").addEventListener("click", processModifyReservation, false);
 };
 
 var updateReservationDisplay = function(reservation) {
-  var reservationNode = $("#reservation-" + reservation.id);
-  $(".reservation-bookedOn", reservationNode).text(reservation.bookedOn);
-  $(".reservation-price strong", reservationNode).text("§"+reservation.price+".99");
-  $(".reservation-status", reservationNode).text(reservation.status);
-  $(".arrivalDate span", reservationNode).text(reservation.arrivalDate);
+  var reservationNode = document.getElementById("reservation-" + reservation.id);
+  reservationNode.querySelector(".reservation-bookedOn").innerText = reservation.bookedOn;
+  reservationNode.querySelector(".reservation-price strong").innerText = "§"+reservation.price+".99";
+  reservationNode.querySelector(".reservation-status").innerText = reservation.status;
+  reservationNode.querySelector(".arrivalDate span").innerText = reservation.arrivalDate;
   if (reservation["status"] !== "Confirmed") {
-    reservationNode.addClass("reservation-card--unconfirmed");
+    reservationNode.classList.add("reservation-card--unconfirmed");
   } else {
-    reservationNode.removeClass("reservation-card--unconfirmed");
+    reservationNode.classList.remove("reservation-card--unconfirmed");
   }
 };
 
 var showNotificationOffer = function() {
-  $("#offer-notification").removeClass("modal--hide");
+  document.getElementById("offer-notification").classList.remove("modal--hide");
 };
 
 var hideNotificationOffer = function() {
-  $("#offer-notification").addClass("modal--hide");
+  document.getElementById("offer-notification").classList.add("modal--hide");
 };
 
-$(document).ready(function() {
+var processQuerystringReservation = function() {
   // Prepopulate reservation form from querystring and create reservation
   var url = new URL(window.location);
   var params = url.searchParams;
@@ -204,10 +223,12 @@ $(document).ready(function() {
     params.has("form--nights") &&
     params.has("form--guests")
   ) {
-    $("#form--arrival-date").val(params.get("form--arrival-date"));
-    $("#form--nights").val(params.get("form--nights"));
-    $("#form--guests").val(params.get("form--guests"));
-    $("form#reservation-form").submit();
+    document.getElementById("form--arrival-date").value = params.get("form--arrival-date");
+    document.getElementById("form--nights").value = params.get("form--nights");
+    document.getElementById("form--guests").value = params.get("form--guests");
+    document.querySelector("form#reservation-form button").click();
     window.history.replaceState(null, "", url.origin + url.pathname);
   }
-});
+};
+
+document.addEventListener("DOMContentLoaded", processQuerystringReservation, false);
