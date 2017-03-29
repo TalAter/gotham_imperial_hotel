@@ -23,19 +23,18 @@ var bootApp = function() {
     .then(function(response){
       return response.json();
     }).then(renderEvents);
-
-    
-  var logoutHandler = function(event) {
-    if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
-      event.preventDefault();
-      navigator.serviceWorker.controller.postMessage(
-        {action: "logout"}
-      );
-    }
-  };
-  
+ 
   var logoutButton = document.getElementById("logout-button");
   if(logoutButton){
+    var logoutHandler = function(event) {
+      if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+        event.preventDefault();
+        navigator.serviceWorker.controller.postMessage(
+          {action: "logout"}
+        );
+      }
+    };
+    
     logoutButton.addEventListener("click", logoutHandler, false);
   }
 };
