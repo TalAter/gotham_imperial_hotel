@@ -28,7 +28,6 @@
   "globals":  {
     "self":                     false,
     "caches":                   false,
-    "$":                        false,
     "Response":                 false,
     "Headers":                  false,
     "importScripts":            false,

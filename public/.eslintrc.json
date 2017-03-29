@@ -2,7 +2,7 @@
   "env": {
     "browser": true,
     "serviceworker": true,
-    "jquery": true,
+    "jquery": false,
     "es6": true,
     "node": false
   },
