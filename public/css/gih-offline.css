@@ -23,13 +23,13 @@ header {
   }
 }
 
-.header-inner-container {
+.hotel-slogan {
   vertical-align: middle;
   display: table-cell;
   margin-top: -50px;
 }
 
-.header-inner-container img {
+.hotel-slogan img {
   width: 373px;
   height: 188px;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.75);
