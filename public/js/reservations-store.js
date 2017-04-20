@@ -122,7 +122,7 @@ var getReservations = function(indexName, indexValue) {
 
 var getReservationsFromServer = function() {
   return new Promise(function(resolve) {
-    if (this.$) {
+    if (self.$) {
       $.getJSON("/reservations.json", resolve);
     } else if (self.fetch) {
       fetch("/reservations.json").then(function(response) {
