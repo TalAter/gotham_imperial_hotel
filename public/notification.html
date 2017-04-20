@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notification Playground</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/gih.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,600,900" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+</head>
+<body class="playground-page">
+  <div id="background-image"></div>
+  <header>
+    <div class="hotel-slogan">
+      <h1>Push Notifications Playground</h1>
+      <button id="notify" type="button" class="btn btn-primary">Trigger notification</button>
+    </div>
+  </header>
+
+  <div class="container-fluid" id="instructions-container">
+    <div class="row">
+      <div id="instructions-code">
+        <h2>Code that should be added to the page goes inside notification.html</h2>
+        <img src="/img/playground-code.png">
+      </div>
+      <div id="instructions-console">
+        <h2>Console code should be run in the browser’s console.</h2>
+        <img src="/img/playground-console.png">
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /******************************************************/
+  /*         Chapter 10. Push Notifications             */
+  /*        Write your code below this comment          */
+  /******************************************************/
+
+  var notificationOptions = {
+    body: "You have been warned",
+    icon: "/img/reservation-gih.jpg",
+    badge: "/img/icon-hotel.png",
+    vibrate: [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500],
+    tag: "trap_notification",
+    actions: [
+      {action: "affirmative", title: "Yes", icon: "/img/icon-confirm.png"},
+      {action: "negative", title: "No", icon: "/img/icon-hotel.png"}
+    ]
+  };
+  var button =  document.querySelector("#notify");
+  button.addEventListener("click", function() {
+    navigator.serviceWorker.ready.then(function(registration) {
+      Notification.requestPermission().then(function(permission) {
+        if (permission === "granted") {
+          registration.showNotification("It's a trap!", notificationOptions);
+        }
+      });
+    });
+  });
+
+
+  /******************************************************/
+  </script>
+
+
+  <script src="/js/app.js"></script>
+  <script src="/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js"></script>
+  <script>
+  ProgressiveKITT.setStylesheet('/js/vendor/progressive-ui-kitt/themes/flat.css');
+  ProgressiveKITT.render();
+  </script>
+
+</body>
+</html>
