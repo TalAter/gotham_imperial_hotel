@@ -94,7 +94,7 @@ self.addEventListener("fetch", function(event) {
       })
     );
   // Handle requests for event images.
-  } else if (requestURL.pathname.indexOf("/img/event-") === 0) {
+  } else if (requestURL.pathname.startsWith("/img/event-")) {
     event.respondWith(
       caches.open(CACHE_NAME).then(function(cache) {
         return cache.match(event.request).then(function(cacheResponse) {
