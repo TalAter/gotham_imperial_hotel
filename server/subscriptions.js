@@ -39,6 +39,7 @@ var add = function(subscription) {
  * @param {Object} pushPayload
  */
 var notify = function(pushPayload) {
+  pushPayload = JSON.stringify(pushPayload);
   webpush.setGCMAPIKey(pushKeys.GCMAPIKey);
   webpush.setVapidDetails(
     pushKeys.subject,
@@ -49,7 +50,7 @@ var notify = function(pushPayload) {
   var subscriptions = db.get("subscriptions").value();
   subscriptions.forEach(function(subscription) {
     webpush
-      .sendNotification(subscription, JSON.stringify(pushPayload))
+      .sendNotification(subscription, pushPayload)
       .then(function() {
         console.log("Notification sent");
       })
