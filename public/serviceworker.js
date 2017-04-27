@@ -1,4 +1,4 @@
-var CACHE_NAME = "gih-cache";
+var CACHE_NAME = "gih-cache-v3";
 var CACHED_URLS = [
   "/index-offline.html",
   "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
@@ -25,6 +25,20 @@ self.addEventListener("fetch", function(event) {
           return caches.match("/index-offline.html");
         }
       });
+    })
+  );
+});
+
+self.addEventListener("activate", function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (CACHE_NAME !== cacheName && cacheName.startsWith("gih-cache")) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
