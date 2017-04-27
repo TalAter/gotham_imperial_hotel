@@ -17,100 +17,37 @@ $(document).ready(function() {
     return false;
   });
 
-  $("#offer-notification a").click(function(event) {
-    event.preventDefault();
-    hideNotificationOffer();
-    subscribeUserToNotifications();
-  });
-
   // Periodically check for unconfirmed bookings
   setInterval(checkUnconfirmedReservations, 5000);
 });
 
 // Fetches reservations from server and renders them to the page
 var populateReservations = function() {
-  getReservations().then(renderReservations);
+  $.getJSON("/reservations.json", renderReservations);
 };
 
 // Go over unconfirmed reservations, and verify their status against the server.
 var checkUnconfirmedReservations = function() {
   $(".reservation-card--unconfirmed").each(function() {
     $.getJSON("/reservation-details.json", {id: $(this).data("id")}, function(data) {
-      updateInObjectStore("reservations", data.id, data);
       updateReservationDisplay(data);
     });
   });
 };
 
-var urlBase64ToUint8Array = function(base64String) {
-  var padding = "=".repeat((4 - base64String.length % 4) % 4);
-  var base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
-  var rawData = window.atob(base64);
-  var outputArray = new Uint8Array(rawData.length);
-  for (var i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
-
-var subscribeUserToNotifications = function() {
-  Notification.requestPermission().then(function(permission) {
-    if (permission === "granted") {
-      var subscribeOptions = {
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          "BKQnRd5V_u942j95_etSdNS6EkYse_HcG-KEbPm_KfvkrGGN_c45G_POcmP8yC_f90SB37ybDoUEcru6Xbr7pTY"
-        )
-      };
-      navigator.serviceWorker.ready.then(function(registration) {
-        return registration.pushManager.subscribe(subscribeOptions);
-      }).then(function(subscription) {
-        var fetchOptions = {
-          method: "post",
-          headers: new Headers({
-            "Content-Type": "application/json"
-          }),
-          body: JSON.stringify(subscription)
-        };
-        return fetch("/add-subscription", fetchOptions);
-      });
-    }
-  });
-};
-
-var offerNotification = function() {
-  if ("Notification" in window &&
-      "PushManager" in window &&
-      "serviceWorker" in navigator) {
-    if (Notification.permission !== "granted") {
-      showNotificationOffer();
-    } else {
-      subscribeUserToNotifications();
-    }
-  }
-};
-
-// Adds a reservation as pending to IndexedDB, the DOM, and the server.
+// Adds a reservation as pending to the DOM, and try to contact server to book it.
 var addReservation = function(id, arrivalDate, nights, guests) {
   var reservationDetails = {
     id:           id,
     arrivalDate:  arrivalDate,
     nights:       nights,
     guests:       guests,
-    status:       "Sending"
+    status:       "Awaiting confirmation"
   };
-  addToObjectStore("reservations", reservationDetails);
   renderReservation(reservationDetails);
-  if ("serviceWorker" in navigator && "SyncManager" in window) {
-    navigator.serviceWorker.ready.then(function(registration) {
-      registration.sync.register("sync-reservations");
-    });
-  } else {
-    $.getJSON("/make-reservation", reservationDetails, function(data) {
-      updateReservationDisplay(data);
-    });
-  }
-  offerNotification();
+  $.getJSON("/make-reservation", reservationDetails, function(data) {
+    updateReservationDisplay(data);
+  });
 };
 
 
@@ -185,14 +122,6 @@ var updateReservationDisplay = function(reservation) {
   } else {
     reservationNode.removeClass("reservation-card--unconfirmed");
   }
-};
-
-var showNotificationOffer = function() {
-  $("#offer-notification").removeClass("modal--hide");
-};
-
-var hideNotificationOffer = function() {
-  $("#offer-notification").addClass("modal--hide");
 };
 
 $(document).ready(function() {
