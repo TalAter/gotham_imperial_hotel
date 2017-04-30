@@ -1,10 +1,25 @@
-var CACHE_NAME = "gih-cache-v3";
+var CACHE_NAME = "gih-cache-v4";
 var CACHED_URLS = [
-  "/index-offline.html",
+  // Our HTML
+  "/index.html",
+  // Stylesheets
+  "/css/gih.css",
   "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
-  "/css/gih-offline.css",
+  "https://fonts.googleapis.com/css?family=Lato:300,600,900",
+  // JavaScript
+  "https://code.jquery.com/jquery-3.0.0.min.js",
+  "/js/app.js",
+  // Images
+  "/img/logo.png",
+  "/img/logo-header.png",
+  "/img/event-calendar-link.jpg",
+  "/img/switch.png",
+  "/img/logo-top-background.png",
   "/img/jumbo-background-sm.jpg",
-  "/img/logo-header.png"
+  "/img/jumbo-background.jpg",
+  "/img/reservation-gih.jpg",
+  "/img/about-hotel-spa.jpg",
+  "/img/about-hotel-luxury.jpg"
 ];
 
 self.addEventListener("install", function(event) {
@@ -22,7 +37,7 @@ self.addEventListener("fetch", function(event) {
         if (response) {
           return response;
         } else if (event.request.headers.get("accept").includes("text/html")) {
-          return caches.match("/index-offline.html");
+          return caches.match("/index.html");
         }
       });
     })
