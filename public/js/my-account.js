@@ -23,13 +23,14 @@ $(document).ready(function() {
 
 // Fetches reservations from server and renders them to the page
 var populateReservations = function() {
-  $.getJSON("/reservations.json", renderReservations);
+  getReservations().then(renderReservations);
 };
 
 // Go over unconfirmed reservations, and verify their status against the server.
 var checkUnconfirmedReservations = function() {
   $(".reservation-card--unconfirmed").each(function() {
     $.getJSON("/reservation-details.json", {id: $(this).data("id")}, function(data) {
+      updateInObjectStore("reservations", data.id, data);
       updateReservationDisplay(data);
     });
   });
@@ -44,6 +45,7 @@ var addReservation = function(id, arrivalDate, nights, guests) {
     guests:       guests,
     status:       "Awaiting confirmation"
   };
+  addToObjectStore("reservations", reservationDetails);
   renderReservation(reservationDetails);
   $.getJSON("/make-reservation", reservationDetails, function(data) {
     updateReservationDisplay(data);
