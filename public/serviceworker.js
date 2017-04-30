@@ -2,6 +2,7 @@ var CACHE_NAME = "gih-cache-v5";
 var CACHED_URLS = [
   // Our HTML
   "/index.html",
+  "/my-account.html",
   // Stylesheets
   "/css/gih.css",
   "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
@@ -10,6 +11,7 @@ var CACHED_URLS = [
   "https://code.jquery.com/jquery-3.0.0.min.js",
   "/js/app.js",
   "/js/offline-map.js",
+  "/js/my-account.js",
   // Images
   "/img/logo.png",
   "/img/logo-header.png",
@@ -24,7 +26,8 @@ var CACHED_URLS = [
   "/img/event-default.jpg",
   "/img/map-offline.jpg",
   // JSON
-  "/events.json"
+  "/events.json",
+  "/reservations.json"
 ];
 var googleMapsAPIJS = "https://maps.googleapis.com/maps/api/js?key="+
   "AIzaSyDm9jndhfbcWByQnrivoaWAEQA8jy3COdE&callback=initMap";
@@ -50,6 +53,25 @@ self.addEventListener("fetch", function(event) {
             return networkResponse;
           });
           return cachedResponse || fetchPromise;
+        });
+      })
+    );
+  // Handle requests for my account page
+  } else if (requestURL.pathname === "/my-account") {
+    event.respondWith(
+      caches.match("/my-account.html").then(function(response) {
+        return response || fetch("/my-account.html");
+      })
+    );
+  // Handle requests for reservations JSON file
+  } else if (requestURL.pathname === "/reservations.json") {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(function(cache) {
+        return fetch(event.request).then(function(networkResponse) {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        }).catch(function() {
+          return caches.match(event.request);
         });
       })
     );
