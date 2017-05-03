@@ -23,10 +23,6 @@ var openDatabase = function() {
       } else {
         reservationsStore = upgradeTransaction.objectStore("reservations");
       }
-
-      if (!reservationsStore.indexNames.contains("idx_status")) {
-        reservationsStore.createIndex("idx_status", "status", { unique: false });
-      }
     };
 
     request.onsuccess = function(event) {
