@@ -145,3 +145,36 @@ self.addEventListener("activate", function(event) {
     })
   );
 });
+
+var createReservationUrl = function(reservationDetails) {
+  var reservationUrl = new URL("http://localhost:8443/make-reservation");
+  Object.keys(reservationDetails).forEach(function(key) {
+    reservationUrl.searchParams.append(key, reservationDetails[key]);
+  });
+  return reservationUrl;
+};
+
+var syncReservations = function() {
+  return getReservations("idx_status", "Sending").then(function(reservations) {
+    return Promise.all(
+      reservations.map(function(reservation) {
+        var reservationUrl = createReservationUrl(reservation);
+        return fetch(reservationUrl).then(function(response) {
+          return response.json();
+        }).then(function(newReservation) {
+          return updateInObjectStore(
+            "reservations",
+            newReservation.id,
+            newReservation
+          );
+        });
+      })
+    );
+  });
+};
+
+self.addEventListener("sync", function(event) {
+  if (event.tag === "sync-reservations") {
+    event.waitUntil(syncReservations());
+  }
+});
