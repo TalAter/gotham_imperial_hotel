@@ -154,6 +154,16 @@ var createReservationUrl = function(reservationDetails) {
   return reservationUrl;
 };
 
+var postReservationDetails = function(reservation) {
+  self.clients.matchAll({ includeUncontrolled: true }).then(function(clients) {
+    clients.forEach(function(client) {
+      client.postMessage(
+        {action: "update-reservation", reservation: reservation}
+      );
+    });
+  });
+};
+
 var syncReservations = function() {
   return getReservations("idx_status", "Sending").then(function(reservations) {
     return Promise.all(
@@ -166,7 +176,9 @@ var syncReservations = function() {
             "reservations",
             newReservation.id,
             newReservation
-          );
+          ).then(function() {
+            postReservationDetails(newReservation);
+          });
         });
       })
     );
@@ -176,5 +188,20 @@ var syncReservations = function() {
 self.addEventListener("sync", function(event) {
   if (event.tag === "sync-reservations") {
     event.waitUntil(syncReservations());
+  }
+});
+
+self.addEventListener("message", function(event) {
+  var data = event.data;
+  if (data.action === "logout") {
+    self.clients.matchAll().then(function(clients) {
+      clients.forEach(function(client) {
+        if (client.url.includes("/my-account")) {
+          client.postMessage(
+            {action: "navigate", url: "/"}
+          );
+        }
+      });
+    });
   }
 });

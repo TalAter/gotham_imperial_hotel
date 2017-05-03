@@ -9,6 +9,25 @@ if ("serviceWorker" in navigator) {
 $(document).ready(function() {
   // Fetch and render upcoming events in the hotel
   $.getJSON("/events.json", renderEvents);
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("message", function (event) {
+      var data = event.data;
+      if (data.action === "navigate") {
+        window.location.href = data.url;
+      } else if (data.action === "update-reservation") {
+        updateReservationDisplay(data.reservation);
+      }
+    });
+    $("#logout-button").click(function(event) {
+      if (navigator.serviceWorker.controller) {
+        event.preventDefault();
+        navigator.serviceWorker.controller.postMessage(
+          {action: "logout"}
+        );
+      }
+    });
+  }
 });
 
 
