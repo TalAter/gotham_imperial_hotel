@@ -14,14 +14,10 @@ var openDatabase = function() {
 
     request.onupgradeneeded = function(event) {
       var db = event.target.result;
-      var upgradeTransaction = event.target.transaction;
-      var reservationsStore;
       if (!db.objectStoreNames.contains("reservations")) {
-        reservationsStore = db.createObjectStore("reservations",
+        db.createObjectStore("reservations",
           { keyPath: "id" }
         );
-      } else {
-        reservationsStore = upgradeTransaction.objectStore("reservations");
       }
     };
 
