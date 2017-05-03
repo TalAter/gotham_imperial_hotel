@@ -6,6 +6,9 @@
     "es6": true,
     "node": false
   },
+  "rules": {
+    "no-unused-vars": 0
+  },
   "globals": {
     "updateReservationDisplay": false,
     "getReservations": false,
