@@ -1,0 +1,22 @@
+{
+  "short_name": "Gotham Imperial",
+  "name": "Gotham Imperial Hotel",
+  "description": "Book your next stay, manage your reservations, and explore Gotham",
+  "start_url": "/my-account?utm_source=pwa",
+  "scope": "/",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/img/app-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/app-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "theme_color": "#242424",
+  "background_color": "#242424"
+}
