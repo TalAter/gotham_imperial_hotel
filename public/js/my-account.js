@@ -36,19 +36,6 @@ var checkUnconfirmedReservations = function() {
   });
 };
 
-var showNewReservationNotification = function() {
-  navigator.serviceWorker.ready.then(function(registration) {
-    registration.showNotification("Reservation Received", {
-      body:
-      "Thank you for making a reservation with Gotham Imperial Hotel.\n"+
-      "You will receive a notification if there are any changes to the reservation.",
-      icon: "/img/reservation-gih.jpg",
-      badge: "/img/icon-hotel.png",
-      tag: "new-reservation"
-    });
-  });
-};
-
 var urlBase64ToUint8Array = function(base64String) {
   var padding = "=".repeat((4 - base64String.length % 4) % 4);
   var base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
@@ -113,7 +100,7 @@ var addReservation = function(id, arrivalDate, nights, guests) {
       updateReservationDisplay(data);
     });
   }
-  showNewReservationNotification();
+  offerNotification();
 };
 
 
