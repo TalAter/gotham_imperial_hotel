@@ -2,10 +2,10 @@ var db = require("./db.js");
 var webpush = require("web-push");
 
 // IMPORTANT
-// Once you have generated the keys, there is no need for this try catch statement,
-// or the temporary-push-keys.js file.
+// Once you have generated the `push-keys.js` file described in chapter 10, there is
+// no need for this try catch statement, or the `temporary-push-keys.js` file.
 // It is only here so that the server can run while you are working on earlier
-// chapters, and have not generated your own push keys yet.
+// chapters, and have not generated your own `push-keys.js` file yet.
 var pushKeys;
 try {
   pushKeys = require("./push-keys.js");
