@@ -76,7 +76,11 @@ var offerNotification = function() {
   if ("Notification" in window &&
       "PushManager" in window &&
       "serviceWorker" in navigator) {
-    subscribeUserToNotifications();
+    if (Notification.permission !== "granted") {
+      showNotificationOffer();
+    } else {
+      subscribeUserToNotifications();
+    }
   }
 };
 
@@ -184,6 +188,12 @@ var showNotificationOffer = function() {
 var hideNotificationOffer = function() {
   $("#offer-notification").addClass("modal--hide");
 };
+
+$("#offer-notification a").click(function(event) {
+  event.preventDefault();
+  hideNotificationOffer();
+  subscribeUserToNotifications();
+});
 
 $(document).ready(function() {
   // Prepopulate reservation form from querystring and create reservation
