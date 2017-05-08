@@ -177,6 +177,14 @@ var updateReservationDisplay = function(reservation) {
   }
 };
 
+var showNotificationOffer = function() {
+  $("#offer-notification").removeClass("modal--hide");
+};
+
+var hideNotificationOffer = function() {
+  $("#offer-notification").addClass("modal--hide");
+};
+
 $(document).ready(function() {
   // Prepopulate reservation form from querystring and create reservation
   var url = new URL(window.location);
