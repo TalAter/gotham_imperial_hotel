@@ -1,5 +1,7 @@
 # Gotham Imperial Hotel
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/TalAter/gotham_imperial_hotel.svg)](https://greenkeeper.io/)
+
 Welcome to the completely fictional Gotham Imperial Hotel.
 
 <a href="https://pwabook.com/oreillyrepo"><img align="right" src="https://github.com/TalAter/awesome-progressive-web-apps/raw/master/images/mpwa.png" alt="Building Progressive Web Apps"></a>
