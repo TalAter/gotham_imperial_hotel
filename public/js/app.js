@@ -1,9 +1,5 @@
 
 
-$(document).ready(function() {
-  // Fetch and render upcoming events in the hotel
-  $.getJSON("/events.json", renderEvents);
-});
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/serviceworker.js")
@@ -13,6 +9,11 @@ if ("serviceWorker" in navigator) {
             console.log("Service worker registration failed:", err);
       });
   }
+
+$(document).ready(function() {
+  // Fetch and render upcoming events in the hotel
+  $.getJSON("/events.json", renderEvents);
+});
 
 /* ************************************************************ */
 /* The code below this point is used to render to the DOM. It   */
