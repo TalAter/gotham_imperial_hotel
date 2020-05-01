@@ -3,7 +3,7 @@ $(document).ready(function() {
   $.getJSON("/events.json", renderEvents);
 });
 
-
+#commit test
 
 
 /* ************************************************************ */
