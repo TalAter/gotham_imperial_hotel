@@ -7,6 +7,10 @@ if ("serviceWorker" in navigator) {
     });
 }
 
+self.addEventListener("fetch", function(event) {
+  console.log("Fetch request for:", event.request.url);
+  });
+
 $(document).ready(function() {
   // Fetch and render upcoming events in the hotel
   $.getJSON("/events.json", renderEvents);
