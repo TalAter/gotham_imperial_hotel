@@ -1,3 +1,7 @@
 self.addEventListener("fetch", function(event) {
-    console.log("Fetch request for:", event.request.url);
+  if (event.request.url.includes("/img/logo.png")) {
+     event.respondWith(
+        fetch("/img/logo-flipped.png")
+     );
+   }
 });
