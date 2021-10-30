@@ -13,7 +13,7 @@ You will use service workers so that it loads almost instantly (even on the slow
 To get started, open your computer's command prompt (the console), change to the directory you would like to download the code to, and run the following commands:
 
 ````
-git clone -b ch02-start git@github.com:TalAter/gotham_imperial_hotel.git
+git clone -b ch02-start https://github.com/TalAter/gotham_imperial_hotel.git
 cd gotham_imperial_hotel
 npm install
 ````
