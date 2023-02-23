@@ -1,45 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IndexedDB Playground</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/gih.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,600,900" rel="stylesheet">
-</head>
-<body class="playground-page">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>IndexedDB Playground</title>
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="/css/gih.css" />
+		<link
+			href="https://fonts.googleapis.com/css?family=Lato:300,600,900"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="playground-page">
+		<script>
+			/******************************************************/
+			/*              Chapter 6. IndexedDB                  */
+			/*        Write your code below this comment          */
+			/******************************************************/
+			let request = window.indexedDB.open("my-database", 1);
 
-  <script>
-  /******************************************************/
-  /*              Chapter 6. IndexedDB                  */
-  /*        Write your code below this comment          */
-  /******************************************************/
+			// Insert Function
+			var insertFun = function () {
+				request.onsuccess = function (event) {
+					var db = event.target.result;
+					var customerData = [
+						{
+							passport_number: "7415849",
+							first_name: "Maaz",
+							last_name: "Sheikh",
+						},
+						{
+							passport_number: "6720006",
+							first_name: "Enoabasi",
+							last_name: "Essien",
+						},
+					];
+					var customerTransaction = db.transaction(
+						"customers",
+						"readwrite"
+					);
+					customerTransaction.onerror = function (event) {
+						console.log("Error: ", event.target.error);
+					};
+					var customerStore =
+						customerTransaction.objectStore("customers");
+					for (var i = 0; i < customerData.length; i++) {
+						customerStore.add(customerData[i]);
+					}
+				};
+			};
 
+			// Update Function
+			var updateFun = function () {
+				request.onsuccess = function (event) {
+					var db = event.target.result;
+					var customerTransaction = db.transaction(
+						"customers",
+						"readwrite"
+					);
+					var customerStore =
+						customerTransaction.objectStore("customers");
+					var customerCursor = customerStore.openCursor();
+					customerCursor.onsuccess = function (event) {
+						var cursor = event.target.result;
+						if (!cursor) {
+							return;
+						}
+						var customer = cursor.value;
+						if (customer.first_name === "Enoabasi") {
+							customer.first_name = "Archer";
+							cursor.update(customer);
+						} else {
+							customer.first_name = "Tom";
+							customerStore.put(customer);
+						}
+						cursor.continue();
+					};
+				};
+			};
 
+			// Delete Function
+			var deleteFun = function () {
+				request.onsuccess = function (event) {
+					var db = event.target.result;
+					db
+						.transaction("customers", "readwrite")
+						.objectStore("customers")
+						.openCursor().onsuccess = function (event) {
+						var cursor = event.target.result;
+						if (!cursor) {
+							return;
+						}
+						var customer = cursor.value;
+						if (customer.last_name === "Essien") {
+							cursor.delete();
+						}
+						cursor.continue();
+					};
+				};
+			};
 
-  /******************************************************/
-  </script>
+			// Reading Function
+			var readFun = function () {
+				request.onsuccess = function (event) {
+					var db = event.target.result;
+					var customerTransaction = db.transaction("customers");
+					var customerStore =
+						customerTransaction.objectStore("customers");
+					var request = customerStore.get("6720006");
+					request.onsuccess = function (event) {
+						var customer = event.target.result;
+						console.log("First name: ", customer.first_name);
+						console.log("Last name: ", customer.last_name);
+					};
+				};
+			};
+			request.onerror = function (event) {
+				console.log("Database error: ", event.target.error);
+			};
 
-  <div id="background-image"></div>
-  <header>
-    <div class="hotel-slogan">
-      <h1>IndexedDB Playground</h1>
-    </div>
-  </header>
+			request.onupgradeneeded = function (event) {
+				var db = event.target.result;
+				db.createObjectStore("customers", {
+					keyPath: "passport_number",
+				});
+			};
 
-  <div class="container-fluid" id="instructions-container">
-    <div class="row">
-      <div id="instructions-code">
-        <h2>Code that should be added to the page goes inside indexeddb.html</h2>
-        <img src="/img/playground-code.png">
-      </div>
-      <div id="instructions-console">
-        <h2>Console code should be run in the browser’s console.</h2>
-        <img src="/img/playground-console.png">
-      </div>
-    </div>
-  </div>
-</body>
+			// Function Calling
+			// insertFun();
+			// readFun();
+			// updateFun();
+			deleteFun();
+
+			/******************************************************/
+		</script>
+
+		<div id="background-image"></div>
+		<header>
+			<div class="hotel-slogan">
+				<h1>IndexedDB Playground</h1>
+			</div>
+		</header>
+
+		<div class="container-fluid" id="instructions-container">
+			<div class="row">
+				<div id="instructions-code">
+					<h2>
+						Code that should be added to the page goes inside
+						indexeddb.html
+					</h2>
+					<img src="/img/playground-code.png" />
+				</div>
+				<div id="instructions-console">
+					<h2>
+						Console code should be run in the browser’s console.
+					</h2>
+					<img src="/img/playground-console.png" />
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
