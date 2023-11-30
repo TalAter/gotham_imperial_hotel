@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "grunt-cli": "^1.2.0"
+    "grunt-cli": "^1.3.0"
   },
   "devDependencies": {
     "express": "^4.14.0",
